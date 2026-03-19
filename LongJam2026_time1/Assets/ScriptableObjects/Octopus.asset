@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39dabd06927a738459f3951c1795c5a1, type: 3}
+  m_Name: Octopus
+  m_EditorClassIdentifier: 
+  fishName: Polvo
+  fishTribe: 1
+  fishMaxHealth: 3
+  fishDamage: 1
+  targets: 010000000200000003000000
+  fishSprite: {fileID: 21300000, guid: e91887af1d36c2c4c9b3ea4a097950b6, type: 3}
