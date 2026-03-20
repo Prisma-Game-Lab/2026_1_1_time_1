@@ -20,6 +20,8 @@ public class BattleManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float timeBetweenTurns = 1.2f;
 
+    [SerializeField] private float critMultiplier = 2.0f;
+
     void Start()
     {
         InitializeBattle();
@@ -82,7 +84,19 @@ public class BattleManager : MonoBehaviour
             int actualIndex = Mathf.Clamp(preferredIndex, 0, opponentTeam.Count - 1);
 
             // Capture the damage BEFORE the fish potentially dies or stats change
-            int damageAmount = attacker.currentDamage; 
+            int damageAmount = attacker.currentDamage;
+            // Checking for Crits
+
+            float random = Random.value;
+            bool isCrit = false;
+            
+
+            if (random <= attacker.currentCritChance)
+            {
+                damageAmount = (int)(damageAmount * critMultiplier);
+                isCrit = true;
+            }
+            
             opponentTeam[actualIndex].currentHealth -= damageAmount;
         
             FishDisplay[] targetSlots = isAttackerPlayer ? enemySlots : playerSlots;
@@ -94,10 +108,10 @@ public class BattleManager : MonoBehaviour
             
                 if (damageAmount > 0) 
                 {
-                    StartCoroutine(targetSlots[actualIndex].ShowDamageText(damageAmount));
+                    StartCoroutine(targetSlots[actualIndex].ShowDamageText(damageAmount,isCrit));
                 }
 
-                // Force the health number to update immediately so it matches the damage text
+               
                 targetSlots[actualIndex].fishHealth.text = opponentTeam[actualIndex].currentHealth.ToString();
             }
         }

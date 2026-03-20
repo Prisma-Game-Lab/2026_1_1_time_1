@@ -72,9 +72,14 @@ public class FishDisplay : MonoBehaviour
         transform.localPosition = originalPos;
     }
 
-    public IEnumerator ShowDamageText(int amount)
-    {
+    public IEnumerator ShowDamageText(int amount, bool isCrit)
+    {   
+        if (isCrit)
+         damageText.text = $"-{amount}!!!";
+
+        else
         damageText.text = $"-{amount}";
+        
         damageText.color = Color.red;
         damageText.gameObject.SetActive(true);
 

@@ -34,6 +34,10 @@ public class FishSO : ScriptableObject
 
     public int fishDamage;
 
+    [Header("Fish Crit-Chance")]
+
+    public float fishCritChance;
+
     [Header("Fish Target")]
 
     public PossibleTargets[] targets;
