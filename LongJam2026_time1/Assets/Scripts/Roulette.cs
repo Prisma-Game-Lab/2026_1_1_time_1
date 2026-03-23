@@ -6,6 +6,7 @@ public class Roulette : MonoBehaviour
 {
     public float RotatePower;
     public float StopPower;
+    public ListaPersonagens bancoDeDados;
 
     private Rigidbody2D rbody;
     int inRotate;
@@ -43,7 +44,7 @@ public class Roulette : MonoBehaviour
 
     public void Rotete() 
     {
-        RotatePower = Random.Range(1250, 1500);
+        RotatePower = Random.Range(500, 1500);
         print(RotatePower);
 
         if(inRotate == 0)
@@ -58,37 +59,52 @@ public class Roulette : MonoBehaviour
     public void GetReward()
     {
         float rot = transform.eulerAngles.z;
+        string triboSorteada = "";
 
         if (rot > 0 && rot <= 60)
         {
             GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,30);
-            print("crustaceo");
+            triboSorteada = "Crustáceo";
         }
         else if (rot > 60 && rot <= 120)
         {
             GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,90);
-            print("peixe");
+            triboSorteada = "Peixe";
         }
         else if (rot > 120 && rot <= 180)
         {
             GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,150);
-            print("molusco");
+            triboSorteada = "Molusco";
         }
         else if (rot > 180 && rot <= 240)
         {
             GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,210);
-            print("crustaceo");
+            triboSorteada = "Crustáceo";
         }
         else if (rot > 240 && rot <= 300)
         {
             GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,270);
-            print("peixe");
+            triboSorteada = "Peixe";
         }
         else if (rot > 300 && rot <= 360)
         {
             GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,330);
-            print("molusco");
+            triboSorteada = "Molusco";
         }
+
+        Debug.Log(triboSorteada);
+        
+        if (bancoDeDados != null && triboSorteada != "")
+        {   
+            FishSO bichoGanhado = bancoDeDados.SortearBicho(triboSorteada);
+        
+            if (bichoGanhado != null)
+            {
+                Debug.Log("VOCÊ GANHOU UM: " + bichoGanhado.fishName);
+            }
+        }
+
+
     }
 
 
