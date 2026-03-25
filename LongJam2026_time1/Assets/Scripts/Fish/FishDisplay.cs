@@ -16,6 +16,10 @@ public class FishDisplay : MonoBehaviour
     private Vector3 originalPos;
     private bool isInitialized = false;
 
+    [HideInInspector] public FishSO fishData;
+
+    // Battle Setup
+
     public void Setup(BattleFish fish, bool isPlayer)
     {
         
@@ -26,12 +30,43 @@ public class FishDisplay : MonoBehaviour
 
         if (fish == null) return;
 
+        fishData = fish.data;
+
         fishSprite.sprite = fish.data.fishSprite;
         fishDamage.text = fish.currentDamage.ToString();
         fishHealth.text = fish.currentHealth.ToString();
 
+        // Change the text's when buffed
+        fishDamage.color = (fish.currentDamage > fish.data.fishDamage) ? Color.green : Color.white;
+        fishHealth.color = (fish.currentHealth > fish.data.fishMaxHealth) ? Color.green : Color.white;
+
         float xRotation = isPlayer ? 180f : 0f; 
         fishSprite.transform.localRotation = Quaternion.Euler(0, xRotation, 0);
+    }
+
+
+    // Team Selection Setup
+    public void Setup(FishSO so)
+    {
+        InitializePosition();
+        if (so == null) return;
+
+        fishData = so; 
+
+        fishSprite.sprite = so.fishSprite;
+        fishDamage.text = so.fishDamage.ToString();
+        fishHealth.text = so.fishMaxHealth.ToString();
+        
+        
+        fishSprite.transform.localRotation = Quaternion.identity;
+    }
+
+    private void InitializePosition()
+    {
+        if (!isInitialized) {
+            originalPos = transform.localPosition;
+            isInitialized = true;
+        }
     }
 
     public IEnumerator PlayAttack(bool isPlayer)

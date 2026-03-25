@@ -16,5 +16,6 @@ MonoBehaviour:
   fishTribe: 1
   fishMaxHealth: 3
   fishDamage: 1
+  fishCritChance: 0.3
   targets: 010000000200000003000000
   fishSprite: {fileID: 21300000, guid: e91887af1d36c2c4c9b3ea4a097950b6, type: 3}
