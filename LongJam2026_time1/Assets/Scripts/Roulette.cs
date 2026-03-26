@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Roulette : MonoBehaviour
@@ -11,6 +13,28 @@ public class Roulette : MonoBehaviour
     private Rigidbody2D rbody;
     int inRotate;
     
+    [Header("Manager Reference")]
+    [SerializeField] private TeamSelectionManager teamManager;
+
+    
+
+    [Header ("UI References")]
+
+    [SerializeField] public TextMeshProUGUI prizeText;
+
+    [Header("Canvas References")]
+
+    [SerializeField] private GameObject cassinoUI;
+
+    [SerializeField] private GameObject teamSelectionUI;
+
+    [SerializeField] private GameObject battleUI;
+
+    [SerializeField] private GameObject setUI;
+
+    [Header("Roulette Settings")]
+
+    [SerializeField] private float endRouletteTimer = 5;
 
     private void Start()
     {
@@ -100,10 +124,24 @@ public class Roulette : MonoBehaviour
         
             if (bichoGanhado != null)
             {
+                prizeText.text = "VOCÊ GANHOU UM: " + bichoGanhado.fishName;
+                teamManager.AddFish(bichoGanhado);
+                StartCoroutine(EndRoulette());
                 Debug.Log("VOCÊ GANHOU UM: " + bichoGanhado.fishName);
             }
         }
 
+
+    }
+
+    private IEnumerator EndRoulette()
+    {
+        yield return new WaitForSeconds(endRouletteTimer);
+        prizeText.text = "";
+        cassinoUI.SetActive(false);
+        teamSelectionUI.SetActive(true);
+        teamManager.InitializeUI();
+        setUI.SetActive(true);
 
     }
 

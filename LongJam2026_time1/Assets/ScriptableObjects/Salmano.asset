@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39dabd06927a738459f3951c1795c5a1, type: 3}
-  m_Name: Shrimp
+  m_Name: Salmano
   m_EditorClassIdentifier: 
-  fishName: "Camar\xE3o"
-  fishTribe: 2
-  fishMaxHealth: 3
-  fishDamage: 2
+  fishName: Salmano
+  fishTribe: 0
+  fishMaxHealth: 2
+  fishDamage: 3
   fishCritChance: 0
   targets: 01000000
-  fishSprite: {fileID: 21300000, guid: e75fde7966f7df5428d6e83135ceafb0, type: 3}
+  fishSprite: {fileID: 21300000, guid: 0d120ff9f53220048b3aa81bd478810a, type: 3}

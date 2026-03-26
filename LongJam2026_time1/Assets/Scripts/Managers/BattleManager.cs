@@ -17,9 +17,17 @@ public enum CurrentResonance
     }
 public class BattleManager : MonoBehaviour
 {
+    [Header("Manager References")]
+
+    [SerializeField] private SetManager setManager;
+
+    [Header("UI References")]
+    
+    [SerializeField] private TextMeshProUGUI winnerText;
+
     [Header("Teams Setup")]
-    [SerializeField] private FishSO[] playerTeamSO;
-    [SerializeField] private FishSO[] enemyTeamSO;
+    [SerializeField] private List<FishSO> playerTeamSO = new List<FishSO>();
+    [SerializeField] private List<FishSO> enemyTeamSO = new List<FishSO>();
 
     private List<BattleFish> playerTeam = new List<BattleFish>();
     private List<BattleFish> enemyTeam = new List<BattleFish>();
@@ -50,7 +58,9 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private float critMultiplier = 2.0f;
 
-    [HideInInspector] public CurrentResonance currentResonance = CurrentResonance.None;
+    [HideInInspector] public CurrentResonance playerResonance = CurrentResonance.None;
+
+    [HideInInspector] public CurrentResonance enemyResonance = CurrentResonance.None;
     
 
     public void StartBattle()
@@ -64,9 +74,13 @@ public class BattleManager : MonoBehaviour
         
         enemyTeam.Clear();
 
+        foreach (var so in playerTeamSO) 
+            if (so != null) playerTeam.Add(new BattleFish(so));
+        
         foreach (var so in enemyTeamSO) 
             if (so != null) enemyTeam.Add(new BattleFish(so));
         
+        EnemyResonanceCheck();
         ActivateResonance();
         UpdateUI();
     }
@@ -104,43 +118,51 @@ public class BattleManager : MonoBehaviour
 
     void ExecuteAttack(BattleFish attacker, List<BattleFish> opponentTeam, bool isAttackerPlayer)
     {
+        if (opponentTeam.Count == 0) return;
+
+        // 1. Calculate Damage once per "Attack Instance"
+        int damageAmount = attacker.currentDamage;
+        float random = Random.value;
+        bool isCrit = false;
+
+        // 2. Check for Crit once for the whole attack
+        if (random <= attacker.currentCritChance)
+        {
+            damageAmount = (int)(damageAmount * critMultiplier);
+            isCrit = true;
+        }
+
+        // 3. Track which fish we have already hit this turn
+        HashSet<BattleFish> hitTargets = new HashSet<BattleFish>();
+
         foreach (PossibleTargets targetType in attacker.data.targets)
         {
             if (opponentTeam.Count == 0) continue;
 
             int preferredIndex = (int)targetType - 1;
             int actualIndex = Mathf.Clamp(preferredIndex, 0, opponentTeam.Count - 1);
-
-            // Capture the damage BEFORE the fish potentially dies or stats change
-            int damageAmount = attacker.currentDamage;
-            // Checking for Crits
-
-            float random = Random.value;
-            bool isCrit = false;
-            
-
-            if (random <= attacker.currentCritChance)
-            {
-                damageAmount = (int)(damageAmount * critMultiplier);
-                isCrit = true;
-            }
-            
-            opponentTeam[actualIndex].currentHealth -= damageAmount;
         
-            FishDisplay[] targetSlots = isAttackerPlayer ? enemySlots : playerSlots;
-        
-            // Only trigger the visual if the damage is meaningful and the slot exists
-            if (actualIndex < targetSlots.Length && targetSlots[actualIndex].gameObject.activeSelf)
+            BattleFish targetFish = opponentTeam[actualIndex];
+
+           
+            if (!hitTargets.Contains(targetFish))
             {
-                StartCoroutine(targetSlots[actualIndex].PlayHit());
-            
-                if (damageAmount > 0) 
+                targetFish.currentHealth -= damageAmount;
+                hitTargets.Add(targetFish); 
+
+                // Visuals
+                FishDisplay[] targetSlots = isAttackerPlayer ? enemySlots : playerSlots;
+                if (actualIndex < targetSlots.Length && targetSlots[actualIndex].gameObject.activeSelf)
                 {
-                    StartCoroutine(targetSlots[actualIndex].ShowDamageText(damageAmount,isCrit));
+                    StartCoroutine(targetSlots[actualIndex].PlayHit());
+                
+                    if (damageAmount > 0) 
+                    {
+                        StartCoroutine(targetSlots[actualIndex].ShowDamageText(damageAmount, isCrit));
+                    }
+                
+                    targetSlots[actualIndex].fishHealth.text = targetFish.currentHealth.ToString();
                 }
-
-               
-                targetSlots[actualIndex].fishHealth.text = opponentTeam[actualIndex].currentHealth.ToString();
             }
         }
     }
@@ -183,26 +205,90 @@ public class BattleManager : MonoBehaviour
 
     void DetermineWinner()
     {
-        if (playerTeam.Count > 0) Debug.Log("PLAYER WINS!");
-        else if (enemyTeam.Count > 0) Debug.Log("ENEMY WINS!");
-        else Debug.Log("IT'S A DRAW!");
+        if (playerTeam.Count > 0)
+        {
+            Debug.Log("JOGADOR GANHOU!");
+            winnerText.text = "JOGADOR GANHOU!";
+            setManager.roundWinner = Winner.Player;
+        }
+         
+        else if (enemyTeam.Count > 0)
+        {
+            Debug.Log("INIMIGO GANHOU!");
+            winnerText.text = "INIMIGO GANHOU!";
+            setManager.roundWinner = Winner.Enemy;
+        } 
+        else
+        {
+            Debug.Log("EMPATOU!");
+            winnerText.text = "EMPATOU!";
+            setManager.roundWinner = Winner.Draw;
+        }
+
+        setManager.EndRound();
+        if(setManager.setWinner == Winner.Draw)
+        StartCoroutine(EndBattle());
+        
     }
 
+    private IEnumerator EndBattle()
+    {
+        yield  return new WaitForSeconds(5);
+        winnerText.text = "";
+        setManager.RestartRound();
+        
+        
+    }
+
+    public void RestartBattle()
+    {
+        
+        StopAllCoroutines(); 
+
+       
+        playerTeam.Clear();
+        enemyTeam.Clear();
+
+        
+        foreach (var so in playerTeamSO) 
+            if (so != null) playerTeam.Add(new BattleFish(so));
+
+        foreach (var so in enemyTeamSO) 
+            if (so != null) enemyTeam.Add(new BattleFish(so));
+
+       
+        ActivateResonance();
+        UpdateUI();
+
+        
+        StartCoroutine(BattleLoop());
+    }
     public void InitializePlayerTeam(List<FishSO> team)
     {
+        playerTeamSO.Clear(); 
         playerTeam.Clear();
         foreach (var so in team) 
-            if (so != null) playerTeam.Add(new BattleFish(so));
+            if (so != null) playerTeamSO.Add(so);
 
         UpdateUI();
     }
 
-    public void ActivateResonance()
+    public void InitializeEnemyTeam(List<FishSO> team)
     {
-        if (currentResonance == CurrentResonance.None)
+        enemyTeamSO.Clear();
+        enemyTeam.Clear();
+        foreach (var so in team) 
+            if (so != null) enemyTeamSO.Add(so);
+
+        UpdateUI();
+    }
+
+    public void ActivatePlayerResonance()
+    {
+        if (playerResonance == CurrentResonance.None)
             return;
         
-        if (currentResonance == CurrentResonance.Fish)
+        if (playerResonance == CurrentResonance.Fish)
         {
             foreach (var fish in playerTeam)
             {
@@ -210,7 +296,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if (currentResonance == CurrentResonance.Crustacean)
+        if (playerResonance == CurrentResonance.Crustacean)
         {
             foreach (var crustacean in playerTeam)
             {
@@ -218,7 +304,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if (currentResonance == CurrentResonance.Mollusk)
+        if (playerResonance == CurrentResonance.Mollusk)
         {
             foreach (var mollusk in playerTeam)
             {
@@ -226,7 +312,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if (currentResonance == CurrentResonance.Joker)
+        if (playerResonance == CurrentResonance.Joker)
         {
             foreach (var fish in playerTeam)
             {
@@ -235,6 +321,96 @@ public class BattleManager : MonoBehaviour
                 fish.currentCritChance += jokerCritIncrease;
             }
         }
+    }
+
+    public void EnemyResonanceCheck()
+    {
+        
+        
+        if (enemyTeam.Count < 3 || enemyTeam[0] == null || enemyTeam[1] == null || enemyTeam[2] == null)
+        {
+            enemyResonance = CurrentResonance.None;
+            return; 
+        }
+
+        
+        FishTribes t0 = enemyTeamSO[0].fishTribe;
+        FishTribes t1 = enemyTeamSO[1].fishTribe;
+        FishTribes t2 = enemyTeamSO[2].fishTribe;
+
+        
+        if (t0 == FishTribes.Peixe && t1 == FishTribes.Peixe && t2 == FishTribes.Peixe)
+        {
+           enemyResonance = CurrentResonance.Fish;
+            
+        }
+        else if (t0 == FishTribes.Molusco && t1 == FishTribes.Molusco && t2 == FishTribes.Molusco)
+        {
+           enemyResonance = CurrentResonance.Mollusk;
+            
+        }
+        else if (t0 == FishTribes.Crustáceo && t1 == FishTribes.Crustáceo && t2 == FishTribes.Crustáceo)
+        {
+            enemyResonance = CurrentResonance.Crustacean;
+            
+        }
+        
+        else if (t0 != t1 && t0 != t2 && t1 != t2)
+        {
+            enemyResonance = CurrentResonance.Joker;
+            
+        }
+        
+        else 
+        {
+            enemyResonance = CurrentResonance.None;
+           
+        }
+    }
+    public void ActivateEnemyResonance()
+    {
+        if (enemyResonance == CurrentResonance.None)
+            return;
+        
+        if (enemyResonance == CurrentResonance.Fish)
+        {
+            foreach (var fish in enemyTeam)
+            {
+                fish.currentDamage += fishAtkIncrease;
+            }
+        }
+
+        if (enemyResonance == CurrentResonance.Crustacean)
+        {
+            foreach (var crustacean in enemyTeam)
+            {
+                crustacean.currentHealth += crustaceanHPIncrease;
+            }
+        }
+
+        if (enemyResonance == CurrentResonance.Mollusk)
+        {
+            foreach (var mollusk in enemyTeam)
+            {
+                mollusk.currentCritChance += molluskCritIncrease;
+            }
+        }
+
+        if (enemyResonance == CurrentResonance.Joker)
+        {
+            foreach (var fish in enemyTeam)
+            {
+                fish.currentDamage += jokerAtkIncrease;
+                fish.currentHealth += jokerHPIncrease;
+                fish.currentCritChance += jokerCritIncrease;
+            }
+        }
+    }
+
+    public void ActivateResonance()
+    {
+        ActivateEnemyResonance();
+        ActivatePlayerResonance();
     }
     
 }

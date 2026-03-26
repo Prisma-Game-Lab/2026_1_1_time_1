@@ -35,6 +35,7 @@ public class FishDisplay : MonoBehaviour
         fishSprite.sprite = fish.data.fishSprite;
         fishDamage.text = fish.currentDamage.ToString();
         fishHealth.text = fish.currentHealth.ToString();
+        damageText.text = "";
 
         // Change the text's when buffed
         fishDamage.color = (fish.currentDamage > fish.data.fishDamage) ? Color.green : Color.white;
@@ -56,6 +57,7 @@ public class FishDisplay : MonoBehaviour
         fishSprite.sprite = so.fishSprite;
         fishDamage.text = so.fishDamage.ToString();
         fishHealth.text = so.fishMaxHealth.ToString();
+        damageText.text = "";
         
         
         fishSprite.transform.localRotation = Quaternion.identity;

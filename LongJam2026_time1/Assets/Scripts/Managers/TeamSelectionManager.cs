@@ -1,12 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 public class TeamSelectionManager : MonoBehaviour
 {   
     [Header ("UI Canvas references")]
 
     [SerializeField] public GameObject teamSelectionUI;
+
+    [SerializeField] public GameObject battleUI;
 
     [Header ("Battle Manager")]
 
@@ -35,19 +38,39 @@ public class TeamSelectionManager : MonoBehaviour
 
     public void InitializePlayerTeam()
     {
-        for (int i=0;i<3;i++)
+        for (int i = 0; i < teamSlots.Length; i++)
         {
-            teamDisplays[i].Setup(activeTeam[i]);
+            if (i < activeTeam.Count && activeTeam[i] != null)
+            {
+            
+                teamDisplays[i].gameObject.SetActive(true);
+                teamDisplays[i].transform.SetParent(teamSlots[i].transform);
+                teamDisplays[i].transform.localPosition = Vector3.zero; 
+                teamDisplays[i].Setup(activeTeam[i]);
+            }
+            else
+            {
+                teamDisplays[i].gameObject.SetActive(false);
+            }
         }
-
         ResonanceCheck();
     }
 
     public void InitializeReserveTeam()
     {
-        for (int i=0;i<3;i++)
+        for (int i = 0; i < reserveDisplays.Length; i++)
         {
-            reserveDisplays[i].Setup(reserveTeam[i]);
+            if (i < reserveTeam.Count && reserveTeam[i] != null)
+            {
+                reserveDisplays[i].gameObject.SetActive(true);
+                reserveDisplays[i].transform.SetParent(reserveSlots[i].transform);
+                reserveDisplays[i].transform.localPosition = Vector3.zero;
+                reserveDisplays[i].Setup(reserveTeam[i]);
+            }
+            else
+            {
+                reserveDisplays[i].gameObject.SetActive(false);
+            }
         }
     }
 
@@ -59,31 +82,38 @@ public class TeamSelectionManager : MonoBehaviour
     
     public void SaveTeamLayout()
     {
-        activeTeam.Clear();
-        reserveTeam.Clear();
+        
+        List<FishSO> newActive = new List<FishSO>();
+        List<FishSO> newReserve = new List<FishSO>();
 
-        // Scan Team Slots
+        
         foreach (FishSlot slot in teamSlots)
         {
             if (slot.transform.childCount > 0)
             {
-                // Grab the data from the FishDisplay component sitting on the child
-                FishSO fishData = slot.transform.GetChild(0).GetComponent<FishDisplay>().fishData;
-                activeTeam.Add(fishData);
+                var display = slot.GetComponentInChildren<FishDisplay>();
+                if (display != null && display.fishData != null) 
+                    newActive.Add(display.fishData);
             }
         }
 
-        // Scan Reserve Slots
         foreach (FishSlot slot in reserveSlots)
         {
             if (slot.transform.childCount > 0)
             {
-                FishSO fishData = slot.transform.GetChild(0).GetComponent<FishDisplay>().fishData;
-                reserveTeam.Add(fishData);
+                var display = slot.GetComponentInChildren<FishDisplay>();
+                if (display != null && display.fishData != null) 
+                    newReserve.Add(display.fishData);
             }
         }
+
+        if (newActive.Count > 0)
+        {
+            activeTeam = new List<FishSO>(newActive);
+            reserveTeam = new List<FishSO>(newReserve);
+        }
+    
         ResonanceCheck();
-        Debug.Log("Team Saved! Active count: " + activeTeam.Count);
     }
     public void RequestSave()
     {
@@ -91,7 +121,7 @@ public class TeamSelectionManager : MonoBehaviour
         StartCoroutine(SaveAtEndOfFrame());
     }
 
-    private System.Collections.IEnumerator SaveAtEndOfFrame()
+    private IEnumerator SaveAtEndOfFrame()
     {
         // Wait until the hierarchy is physically updated
         yield return new WaitForEndOfFrame();
@@ -106,8 +136,9 @@ public class TeamSelectionManager : MonoBehaviour
     public void ToBattle()
     {
         
-        
+        SaveTeamLayout();
         SetPlayerBattleTeam();
+        battleUI.SetActive(true);
         battleManager.StartBattle();
         teamSelectionUI.SetActive(false);
 
@@ -115,45 +146,63 @@ public class TeamSelectionManager : MonoBehaviour
 
     public void ResonanceCheck()
     {
-        if(activeTeam[0].fishTribe == FishTribes.Peixe 
-        && activeTeam[1].fishTribe == FishTribes.Peixe 
-        && activeTeam[2].fishTribe == FishTribes.Peixe)
+        
+        
+        if (activeTeam.Count < 3 || activeTeam[0] == null || activeTeam[1] == null || activeTeam[2] == null)
         {
-            battleManager.currentResonance = CurrentResonance.Fish;
-            print("FISH RESONANCE ACTIVATED");
-            
-        }
-        else if(activeTeam[0].fishTribe == FishTribes.Molusco 
-        && activeTeam[1].fishTribe == FishTribes.Molusco 
-        && activeTeam[2].fishTribe == FishTribes.Molusco)
-        {
-            battleManager.currentResonance = CurrentResonance.Mollusk;
-            print("MOLLUSK RESONANCE ACTIVATED");
-            
-        }
-        else if(activeTeam[0].fishTribe == FishTribes.Crustáceo
-        && activeTeam[1].fishTribe == FishTribes.Crustáceo 
-        && activeTeam[2].fishTribe == FishTribes.Crustáceo)
-        {
-            battleManager.currentResonance = CurrentResonance.Crustacean;
-            print("CRUSTACEAN RESONANCE ACTIVATED");
-            
-        }
-        else if(activeTeam[0].fishTribe != activeTeam[1].fishTribe
-        && activeTeam[0].fishTribe != activeTeam[2].fishTribe 
-        && activeTeam[1].fishTribe != activeTeam[2].fishTribe)
-        {
-            battleManager.currentResonance = CurrentResonance.Joker;
-            print("JOKER RESONANCE ACTIVATED");
-            
+            battleManager.playerResonance = CurrentResonance.None;
+            print("Not enough fish for resonance!");
+            return; 
         }
 
-        else 
+        
+        FishTribes t0 = activeTeam[0].fishTribe;
+        FishTribes t1 = activeTeam[1].fishTribe;
+        FishTribes t2 = activeTeam[2].fishTribe;
+
+        
+        if (t0 == FishTribes.Peixe && t1 == FishTribes.Peixe && t2 == FishTribes.Peixe)
         {
-            battleManager.currentResonance = CurrentResonance.None;
-            print("No Resonance Active :(");
+            battleManager.playerResonance = CurrentResonance.Fish;
+            print("FISH RESONANCE ACTIVATED");
+        }
+        else if (t0 == FishTribes.Molusco && t1 == FishTribes.Molusco && t2 == FishTribes.Molusco)
+        {
+            battleManager.playerResonance = CurrentResonance.Mollusk;
+            print("MOLLUSK RESONANCE ACTIVATED");
+        }
+        else if (t0 == FishTribes.Crustáceo && t1 == FishTribes.Crustáceo && t2 == FishTribes.Crustáceo)
+        {
+            battleManager.playerResonance = CurrentResonance.Crustacean;
+            print("CRUSTACEAN RESONANCE ACTIVATED");
         }
         
+        else if (t0 != t1 && t0 != t2 && t1 != t2)
+        {
+            battleManager.playerResonance = CurrentResonance.Joker;
+            print("JOKER RESONANCE ACTIVATED");
+        }
+        
+        else 
+        {
+            battleManager.playerResonance = CurrentResonance.None;
+            print("No Resonance Active :(");
+        }
+    }
+
+    public void AddFish(FishSO fish)
+    {
+        if(activeTeam.Count < 3)
+        {
+            activeTeam.Add(fish);
+            
+        }
+        else
+        {
+            reserveTeam.Add(fish);
+            
+        }
+        InitializeUI();
     }
     
 }

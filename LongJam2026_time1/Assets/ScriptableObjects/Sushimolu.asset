@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39dabd06927a738459f3951c1795c5a1, type: 3}
-  m_Name: Octopus
+  m_Name: Sushimolu
   m_EditorClassIdentifier: 
-  fishName: Polvo
+  fishName: Sushimolu
   fishTribe: 1
   fishMaxHealth: 3
   fishDamage: 1
-  fishCritChance: 0.3
+  fishCritChance: 0.2
   targets: 010000000200000003000000
-  fishSprite: {fileID: 21300000, guid: e91887af1d36c2c4c9b3ea4a097950b6, type: 3}
+  fishSprite: {fileID: 21300000, guid: dd792234ef1d9e34bb3de97491258b47, type: 3}
