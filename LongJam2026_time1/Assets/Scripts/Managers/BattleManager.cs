@@ -120,50 +120,66 @@ public class BattleManager : MonoBehaviour
     {
         if (opponentTeam.Count == 0) return;
 
-        // 1. Calculate Damage once per "Attack Instance"
+        // 1. Calculate Damage and Crit once for the entire attack instance
         int damageAmount = attacker.currentDamage;
-        float random = Random.value;
-        bool isCrit = false;
+        bool isCrit = Random.value <= attacker.currentCritChance;
+        if (isCrit) damageAmount = (int)(damageAmount * critMultiplier);
 
-        // 2. Check for Crit once for the whole attack
-        if (random <= attacker.currentCritChance)
-        {
-            damageAmount = (int)(damageAmount * critMultiplier);
-            isCrit = true;
-        }
-
-        // 3. Track which fish we have already hit this turn
         HashSet<BattleFish> hitTargets = new HashSet<BattleFish>();
 
+        // 2. We iterate through every intended target in the ScriptableObject
         foreach (PossibleTargets targetType in attacker.data.targets)
         {
-            if (opponentTeam.Count == 0) continue;
+            if (hitTargets.Count >= opponentTeam.Count) break; // No unique targets left to hit
 
             int preferredIndex = (int)targetType - 1;
-            int actualIndex = Mathf.Clamp(preferredIndex, 0, opponentTeam.Count - 1);
         
-            BattleFish targetFish = opponentTeam[actualIndex];
+            // 3. FIND THE TARGET:
+            // If the preferred index is alive and not hit, take it.
+            // Otherwise, find the closest available fish that hasn't been hit.
+            BattleFish targetFish = GetValidTarget(preferredIndex, opponentTeam, hitTargets);
 
-           
-            if (!hitTargets.Contains(targetFish))
+            if (targetFish != null)
             {
                 targetFish.currentHealth -= damageAmount;
-                hitTargets.Add(targetFish); 
+                hitTargets.Add(targetFish);
 
-                // Visuals
-                FishDisplay[] targetSlots = isAttackerPlayer ? enemySlots : playerSlots;
-                if (actualIndex < targetSlots.Length && targetSlots[actualIndex].gameObject.activeSelf)
-                {
-                    StartCoroutine(targetSlots[actualIndex].PlayHit());
-                
-                    if (damageAmount > 0) 
-                    {
-                        StartCoroutine(targetSlots[actualIndex].ShowDamageText(damageAmount, isCrit));
-                    }
-                
-                    targetSlots[actualIndex].fishHealth.text = targetFish.currentHealth.ToString();
-                }
+                // Find the actual index of the fish we just decided to hit to update the correct slot
+                int visualIndex = opponentTeam.IndexOf(targetFish);
+                UpdateAttackVisuals(visualIndex, damageAmount, isCrit, isAttackerPlayer, targetFish.currentHealth);
             }
+        }
+    }
+
+    // Helper method to find the "Smart" target
+    private BattleFish GetValidTarget(int preferredIndex, List<BattleFish> team, HashSet<BattleFish> alreadyHit)
+    {
+        // Try the intended slot first
+        if (preferredIndex < team.Count && !alreadyHit.Contains(team[preferredIndex]))
+        {
+            return team[preferredIndex];
+        }
+
+        // If intended slot is invalid/already hit, grab the nearest available fish (from front to back)
+        for (int i = 0; i < team.Count; i++)
+        {
+            if (!alreadyHit.Contains(team[i]))
+            {
+                return team[i];
+            }
+        }
+        return null;
+    }
+
+    
+    private void UpdateAttackVisuals(int index, int damage, bool crit, bool isPlayerAttacking, int newHealth)
+    {
+        FishDisplay[] targetSlots = isPlayerAttacking ? enemySlots : playerSlots;
+        if (index < targetSlots.Length && targetSlots[index].gameObject.activeSelf)
+        {
+            StartCoroutine(targetSlots[index].PlayHit());
+            if (damage > 0) StartCoroutine(targetSlots[index].ShowDamageText(damage, crit));
+            targetSlots[index].fishHealth.text = newHealth.ToString();
         }
     }
 
