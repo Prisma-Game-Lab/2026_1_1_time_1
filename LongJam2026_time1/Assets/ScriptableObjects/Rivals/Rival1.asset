@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c4a55a4ec03b9488bdfa94e8af2a79, type: 3}
+  m_Name: Rival1
+  m_EditorClassIdentifier: 
+  rivalName: John Peixe
+  firstTeam:
+  - {fileID: 11400000, guid: 6ede2273f54c897428271cdbd4551ed2, type: 2}
+  - {fileID: 11400000, guid: 6ede2273f54c897428271cdbd4551ed2, type: 2}
+  - {fileID: 11400000, guid: 6ede2273f54c897428271cdbd4551ed2, type: 2}
+  secondTeam:
+  - {fileID: 11400000, guid: d9935ae2cedd0f545a90817b6155f91f, type: 2}
+  - {fileID: 11400000, guid: d9935ae2cedd0f545a90817b6155f91f, type: 2}
+  - {fileID: 11400000, guid: d9935ae2cedd0f545a90817b6155f91f, type: 2}
+  rivalSprite: {fileID: 0}

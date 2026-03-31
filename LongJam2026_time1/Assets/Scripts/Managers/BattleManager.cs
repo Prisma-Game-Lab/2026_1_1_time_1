@@ -25,9 +25,9 @@ public class BattleManager : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI winnerText;
 
-    [Header("Teams Setup")]
-    [SerializeField] private List<FishSO> playerTeamSO = new List<FishSO>();
-    [SerializeField] private List<FishSO> enemyTeamSO = new List<FishSO>();
+    //[Header("Teams Setup")]
+    private List<FishSO> playerTeamSO = new List<FishSO>();
+    private List<FishSO> enemyTeamSO = new List<FishSO>();
 
     private List<BattleFish> playerTeam = new List<BattleFish>();
     private List<BattleFish> enemyTeam = new List<BattleFish>();
@@ -55,9 +55,21 @@ public class BattleManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float timeBetweenTurns = 1.2f;
-
+    [SerializeField] private float timeAfterDeathCleanup = 0.4f;
     [SerializeField] private float critMultiplier = 2.0f;
 
+    [Header("Animation Timings")]
+    
+    [SerializeField] private float delayBeforeDamage = 0.25f; 
+
+    
+    [SerializeField] private float delayAfterDamage = 0.6f;
+
+    
+    [SerializeField] private float damageTextDuration = 0.75f;
+
+    
+    [SerializeField] private float hitShakeDuration = 0.18f;
     [HideInInspector] public CurrentResonance playerResonance = CurrentResonance.None;
 
     [HideInInspector] public CurrentResonance enemyResonance = CurrentResonance.None;
@@ -87,33 +99,48 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator BattleLoop()
     {
-        yield return new WaitForSeconds(1f); 
+        yield return new WaitForSeconds(timeBetweenTurns); 
 
         while (playerTeam.Count > 0 && enemyTeam.Count > 0)
         {
             BattleFish pAttacker = playerTeam[0];
             BattleFish eAttacker = enemyTeam[0];
 
-            
             StartCoroutine(playerSlots[0].PlayAttack(true));
             StartCoroutine(enemySlots[0].PlayAttack(false));
 
             
-            yield return new WaitForSeconds(0.25f); 
+            yield return new WaitForSeconds(delayBeforeDamage); 
 
-            
             ExecuteAttack(pAttacker, enemyTeam, true);
             ExecuteAttack(eAttacker, playerTeam, false);
 
             
-            yield return new WaitForSeconds(0.6f); 
+            yield return new WaitForSeconds(delayAfterDamage); 
 
             CleanupDeadFish();
             UpdateUI();
 
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(timeAfterDeathCleanup);
         }
         DetermineWinner();
+    }
+
+    private void UpdateAttackVisuals(int index, int damage, bool crit, bool isPlayerAttacking, int newHealth)
+    {
+    FishDisplay[] targetSlots = isPlayerAttacking ? enemySlots : playerSlots;
+    if (index < targetSlots.Length && targetSlots[index].gameObject.activeSelf)
+    {
+        // Pass the timing settings down to the display component
+        StartCoroutine(targetSlots[index].PlayHit(hitShakeDuration));
+        
+        if (damage > 0) 
+        {
+            StartCoroutine(targetSlots[index].ShowDamageText(damage, crit, damageTextDuration));
+        }
+        
+        targetSlots[index].fishHealth.text = newHealth.ToString();
+    }
 }
 
     void ExecuteAttack(BattleFish attacker, List<BattleFish> opponentTeam, bool isAttackerPlayer)
@@ -172,17 +199,7 @@ public class BattleManager : MonoBehaviour
     }
 
     
-    private void UpdateAttackVisuals(int index, int damage, bool crit, bool isPlayerAttacking, int newHealth)
-    {
-        FishDisplay[] targetSlots = isPlayerAttacking ? enemySlots : playerSlots;
-        if (index < targetSlots.Length && targetSlots[index].gameObject.activeSelf)
-        {
-            StartCoroutine(targetSlots[index].PlayHit());
-            if (damage > 0) StartCoroutine(targetSlots[index].ShowDamageText(damage, crit));
-            targetSlots[index].fishHealth.text = newHealth.ToString();
-        }
-    }
-
+    
     void CleanupDeadFish()
     {
         playerTeam.RemoveAll(f => f.IsDead);

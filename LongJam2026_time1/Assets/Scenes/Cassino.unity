@@ -222,6 +222,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SetUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1128366068749028862, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273275417974410880, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNextRival
+      objectReference: {fileID: 0}
     - target: {fileID: 2368582250522215416, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -258,6 +266,38 @@ PrefabInstance:
       propertyPath: teamSelectionUI
       value: 
       objectReference: {fileID: 1969977448}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: firstEnemyTeam.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: secondEnemyTeam.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: firstEnemyTeam.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 81b2e0968a194da46a79a8df022c20d6, type: 2}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: firstEnemyTeam.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: firstEnemyTeam.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: d9935ae2cedd0f545a90817b6155f91f, type: 2}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: secondEnemyTeam.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: secondEnemyTeam.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ede2273f54c897428271cdbd4551ed2, type: 2}
+    - target: {fileID: 2667729173012394305, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
+      propertyPath: secondEnemyTeam.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
     - target: {fileID: 4376336400935134401, guid: 3361bc55f4df6ca4fad684da109b4c3f, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -766,8 +806,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1904006365}
     - target: {fileID: 3069143933272798651, guid: 9881ac3fd55cc2d44a722b55022577b3, type: 3}
+      propertyPath: hitShakeDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069143933272798651, guid: 9881ac3fd55cc2d44a722b55022577b3, type: 3}
+      propertyPath: timeBetweenTurns
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069143933272798651, guid: 9881ac3fd55cc2d44a722b55022577b3, type: 3}
+      propertyPath: damageTextDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069143933272798651, guid: 9881ac3fd55cc2d44a722b55022577b3, type: 3}
+      propertyPath: timeAfterDeathCleanup
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069143933272798651, guid: 9881ac3fd55cc2d44a722b55022577b3, type: 3}
       propertyPath: enemyTeamSO.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3069143933272798651, guid: 9881ac3fd55cc2d44a722b55022577b3, type: 3}
       propertyPath: enemyTeamSO.Array.data[0]

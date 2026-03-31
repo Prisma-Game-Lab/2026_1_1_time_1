@@ -36,8 +36,10 @@ public class TeamSelectionManager : MonoBehaviour
 
     }
 
+
     public void InitializePlayerTeam()
     {
+        
         for (int i = 0; i < teamSlots.Length; i++)
         {
             if (i < activeTeam.Count && activeTeam[i] != null)

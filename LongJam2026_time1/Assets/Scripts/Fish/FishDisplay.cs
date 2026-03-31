@@ -5,6 +5,11 @@ using TMPro;
 
 public class FishDisplay : MonoBehaviour
 {
+
+    [Header("Settings")]
+
+    [SerializeField] private float attackTextduration = 0.75f;
+
     [Header("UI References")]
     [SerializeField] public Image fishSprite;
     [SerializeField] public TextMeshProUGUI fishDamage;
@@ -109,41 +114,40 @@ public class FishDisplay : MonoBehaviour
         transform.localPosition = originalPos;
     }
 
-    public IEnumerator ShowDamageText(int amount, bool isCrit)
+    public IEnumerator ShowDamageText(int amount, bool isCrit, float duration)
     {   
-        if (isCrit)
-         damageText.text = $"-{amount}!!!";
-
-        else
-        damageText.text = $"-{amount}";
-        
+        damageText.text = isCrit ? $"-{amount}!!!" : $"-{amount}";
         damageText.color = Color.red;
         damageText.gameObject.SetActive(true);
 
         Vector3 startPos = damageText.transform.localPosition;
         Vector3 endPos = startPos + new Vector3(0, 50f, 0); 
         float elapsed = 0;
-        float duration = 0.5f;
 
         while (elapsed < duration)
         {
-            damageText.transform.localPosition = Vector3.Lerp(startPos, endPos, elapsed / duration);
-            // Fade out
-            damageText.alpha = Mathf.Lerp(1, 0, elapsed / duration);
+            float t = elapsed / duration;
+            damageText.transform.localPosition = Vector3.Lerp(startPos, endPos, t);
+            damageText.alpha = Mathf.Lerp(1, 0, t);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         damageText.gameObject.SetActive(false);
-        damageText.transform.localPosition = startPos; // Reset for next time
+        damageText.transform.localPosition = startPos; 
     }
-    
-    public IEnumerator PlayHit()
+
+
+    public IEnumerator PlayHit(float duration)
     {
-        
-        for (int i = 0; i < 6; i++) {
+        float elapsed = 0;
+        while (elapsed < duration) 
+        {
             transform.localPosition = originalPos + (Vector3)Random.insideUnitCircle * 8f;
-            yield return new WaitForSeconds(0.03f);
+            // Small constant for rapid shaking frequency
+            float shakeStep = 0.03f;
+            elapsed += shakeStep;
+            yield return new WaitForSeconds(shakeStep);
         }
         transform.localPosition = originalPos;
     }

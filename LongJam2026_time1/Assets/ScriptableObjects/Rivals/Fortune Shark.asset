@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c4a55a4ec03b9488bdfa94e8af2a79, type: 3}
+  m_Name: Fortune Shark
+  m_EditorClassIdentifier: 
+  rivalName: Fortune Shark
+  firstTeam:
+  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
+  - {fileID: 11400000, guid: 81b2e0968a194da46a79a8df022c20d6, type: 2}
+  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
+  secondTeam:
+  - {fileID: 11400000, guid: a43b1dc8e3f841d47b7e27d8f054742e, type: 2}
+  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
+  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
+  rivalSprite: {fileID: 0}
