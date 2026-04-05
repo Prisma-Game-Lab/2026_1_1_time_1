@@ -10,11 +10,42 @@ public class Roulette : MonoBehaviour
 
     private Rigidbody2D rbody;
     int inRotate;
+
+    public int money;
     
+<<<<<<< Updated upstream
+=======
+    [Header("Manager Reference")]
+    [SerializeField] private TeamSelectionManager teamManager;
+
+    
+
+    [Header ("UI References")]
+
+    [SerializeField] public TextMeshProUGUI prizeText;
+
+    [SerializeField] public TextMeshProUGUI moneyText;
+    
+
+    [Header("Canvas References")]
+
+    [SerializeField] private GameObject cassinoUI;
+
+    [SerializeField] private GameObject teamSelectionUI;
+
+    [SerializeField] private GameObject battleUI;
+
+    [SerializeField] private GameObject setUI;
+
+    [Header("Roulette Settings")]
+
+    [SerializeField] private float endRouletteTimer = 5;
+>>>>>>> Stashed changes
 
     private void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+        moneyText.text = "Dinheiro: $" + money.ToString();
     }
 
     float t;
@@ -39,6 +70,11 @@ public class Roulette : MonoBehaviour
                 t = 0;
             }
         }
+
+        if(gameObject.activeSelf)
+        {
+            moneyText.text = "Dinheiro: $" + money.ToString();
+        }
     }
 
 
@@ -47,8 +83,10 @@ public class Roulette : MonoBehaviour
         RotatePower = Random.Range(500, 1500);
         print(RotatePower);
 
-        if(inRotate == 0)
+        if(inRotate == 0 && money > 0)
         {
+            money -= 1;
+            moneyText.text = "Dinheiro: $" + money.ToString();
             rbody.AddTorque(RotatePower);
             inRotate = 1;
         }
@@ -100,7 +138,17 @@ public class Roulette : MonoBehaviour
         
             if (bichoGanhado != null)
             {
+<<<<<<< Updated upstream
+=======
+                prizeText.text = "VOCÊ GANHOU UM: " + bichoGanhado.fishName;
+                teamManager.AddFish(bichoGanhado);
+>>>>>>> Stashed changes
                 Debug.Log("VOCÊ GANHOU UM: " + bichoGanhado.fishName);
+            }
+
+            if(money < 1)
+            {
+                StartCoroutine(EndRoulette());
             }
         }
 

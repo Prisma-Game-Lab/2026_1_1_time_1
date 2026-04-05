@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3477470686244827280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4710119450635860874}
+  - component: {fileID: 2691991462334315329}
+  m_Layer: 0
+  m_Name: CassinoManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4710119450635860874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477470686244827280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2691991462334315329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477470686244827280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718d8ad95b1f1764eb1f38c5f52b1263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  todosOsIndividuos:
+  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
+  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
+  - {fileID: 11400000, guid: 81b2e0968a194da46a79a8df022c20d6, type: 2}
+  - {fileID: 11400000, guid: 6ede2273f54c897428271cdbd4551ed2, type: 2}
+  - {fileID: 11400000, guid: fc2552a94ac30c3418b0c3f4d4a96068, type: 2}
+  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
+  - {fileID: 11400000, guid: d9935ae2cedd0f545a90817b6155f91f, type: 2}
