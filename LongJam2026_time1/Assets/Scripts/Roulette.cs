@@ -12,6 +12,8 @@ public class Roulette : MonoBehaviour
 
     private Rigidbody2D rbody;
     int inRotate;
+
+    public int dinheiro = 1;
     
     [Header("Manager Reference")]
     [SerializeField] private TeamSelectionManager teamManager;
@@ -21,16 +23,19 @@ public class Roulette : MonoBehaviour
     [Header ("UI References")]
 
     [SerializeField] public TextMeshProUGUI prizeText;
+    [SerializeField] public TextMeshProUGUI moneyText;
 
     [Header("Canvas References")]
 
-    [SerializeField] private GameObject cassinoUI;
+    [SerializeField] private GameObject cassinoEroletaUI;
 
     [SerializeField] private GameObject teamSelectionUI;
 
     [SerializeField] private GameObject battleUI;
 
     [SerializeField] private GameObject setUI;
+
+    [SerializeField] private GameObject cassinoUI;
 
     [Header("Roulette Settings")]
 
@@ -44,7 +49,8 @@ public class Roulette : MonoBehaviour
     float t;
     private void Update()
     {           
-        
+        moneyText.text = "Dinheiro: " + dinheiro;
+
         if (rbody.angularVelocity > 0)
         {
             rbody.angularVelocity -= StopPower*Time.deltaTime;
@@ -68,13 +74,19 @@ public class Roulette : MonoBehaviour
 
     public void Rotete() 
     {
-        RotatePower = Random.Range(500, 1500);
-        print(RotatePower);
-
-        if(inRotate == 0)
+        if(dinheiro > 0)
         {
-            rbody.AddTorque(RotatePower);
-            inRotate = 1;
+            cassinoUI.SetActive(false);
+            RotatePower = Random.Range(500, 1500);
+            print(RotatePower);
+            dinheiro -= 1;
+
+
+            if(inRotate == 0)
+            {
+                rbody.AddTorque(RotatePower);
+                inRotate = 1;
+            }
         }
     }
 
@@ -117,6 +129,7 @@ public class Roulette : MonoBehaviour
         }
 
         Debug.Log(triboSorteada);
+        cassinoUI.SetActive(true);
         
         if (bancoDeDados != null && triboSorteada != "")
         {   
@@ -126,8 +139,11 @@ public class Roulette : MonoBehaviour
             {
                 prizeText.text = "VOCÊ GANHOU UM: " + bichoGanhado.fishName;
                 teamManager.AddFish(bichoGanhado);
-                StartCoroutine(EndRoulette());
                 Debug.Log("VOCÊ GANHOU UM: " + bichoGanhado.fishName);
+                if(dinheiro <= 0)
+                {
+                    StartCoroutine(EndRoulette());
+                }
             }
         }
 
@@ -138,7 +154,7 @@ public class Roulette : MonoBehaviour
     {
         yield return new WaitForSeconds(endRouletteTimer);
         prizeText.text = "";
-        cassinoUI.SetActive(false);
+        cassinoEroletaUI.SetActive(false);
         teamSelectionUI.SetActive(true);
         teamManager.InitializeUI();
         setUI.SetActive(true);

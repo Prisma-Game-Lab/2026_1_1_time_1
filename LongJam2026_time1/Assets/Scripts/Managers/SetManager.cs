@@ -62,6 +62,8 @@ public class SetManager : MonoBehaviour
 
     [HideInInspector] public Winner setWinner = Winner.Draw;
 
+    public Roulette money;
+
     private int playerRounds = 0;
 
     private int enemyRounds = 0;
@@ -84,6 +86,7 @@ public class SetManager : MonoBehaviour
         teamManager.reserveTeam.Clear();
 
         cassinoUI.SetActive(true);
+        money.dinheiro = 1;
         setUI.SetActive(false);
         
         playerCount.text = playerRounds.ToString() + "/" + maxRounds.ToString();
@@ -170,6 +173,7 @@ public class SetManager : MonoBehaviour
     public void RestartRound()
     {
         cassinoUI.SetActive(true);
+        money.dinheiro = 1;
         battleUI.SetActive(false);
         setUI.SetActive(false);
         
