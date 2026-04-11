@@ -27,9 +27,11 @@ public class TeamOnClick : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (myFishData == null) return;
 
         sortManager.membros += 1;
-        Debug.Log("Macaco Prego");
+        Debug.Log("Peixe selecionado: " + myFishData.fishName);
+
         this.gameObject.SetActive(false);
         teamManager.AddFish(myFishData);
 
