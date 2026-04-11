@@ -15,8 +15,24 @@ public class FishDisplay : MonoBehaviour
     [SerializeField] public TextMeshProUGUI fishDamage;
     [SerializeField] public TextMeshProUGUI fishHealth;
 
+    [SerializeField] public GameObject auraObject;
+
+
     [Header("Effects")]
     [SerializeField] private TextMeshProUGUI damageText;
+
+    [Header("Aura Effects")]
+
+    [SerializeField] private Image auraImage;
+    [SerializeField] private float auraPulseSpeed = 2f;
+    [SerializeField] private float auraPulseAmount = 0.05f;
+
+    private Coroutine auraCoroutine;
+
+    private Vector3 auraBaseScale;
+    private bool auraBaseScaleCaptured = false;
+
+
 
     private Vector3 originalPos;
     private bool isInitialized = false;
@@ -38,6 +54,7 @@ public class FishDisplay : MonoBehaviour
         fishData = fish.data;
 
         fishSprite.sprite = fish.data.fishSprite;
+        auraImage.sprite = fish.data.auraSprite;
         fishDamage.text = fish.currentDamage.ToString();
         fishHealth.text = fish.currentHealth.ToString();
         damageText.text = "";
@@ -46,7 +63,7 @@ public class FishDisplay : MonoBehaviour
         fishDamage.color = (fish.currentDamage > fish.data.fishDamage) ? Color.green : Color.white;
         fishHealth.color = (fish.currentHealth > fish.data.fishMaxHealth) ? Color.green : Color.white;
 
-        float xRotation = isPlayer ? 180f : 0f; 
+        float xRotation = !isPlayer ? 180f : 0f; 
         fishSprite.transform.localRotation = Quaternion.Euler(0, xRotation, 0);
     }
 
@@ -150,5 +167,49 @@ public class FishDisplay : MonoBehaviour
             yield return new WaitForSeconds(shakeStep);
         }
         transform.localPosition = originalPos;
+    }
+
+    public void SetAura(bool active)
+    {
+        if (auraObject == null) return;
+
+    if (!auraBaseScaleCaptured)
+    {
+        auraBaseScale = auraObject.transform.localScale;
+        auraBaseScaleCaptured = true;
+    }
+
+    if (active)
+    {
+        auraObject.SetActive(true);
+        if (auraCoroutine != null) 
+            StopCoroutine(auraCoroutine);
+
+        auraCoroutine = StartCoroutine(PulseAura());
+        
+    }
+    else
+    {
+        if (auraCoroutine != null)
+        {
+            StopCoroutine(auraCoroutine);
+            auraCoroutine = null;
+        }
+        auraObject.transform.localScale = auraBaseScale; 
+        auraObject.SetActive(false);
+    }
+    }
+
+    private IEnumerator PulseAura()
+    {
+        Transform t = auraObject.transform;
+        Vector3 baseScale = t.localScale;
+
+        while (true)
+        {
+            float pulse = 1f + Mathf.Sin(Time.time * auraPulseSpeed * Mathf.PI) * auraPulseAmount;
+            t.localScale = baseScale * pulse;
+            yield return null;
+        }
     }
 }

@@ -42,7 +42,9 @@ public class FishSO : ScriptableObject
 
     public PossibleTargets[] targets;
 
-    [Header("Fish Sprite")]
+    [Header("Sprites")]
 
     public Sprite fishSprite;
+
+    public Sprite auraSprite;
 }

@@ -48,6 +48,8 @@ public class SetManager : MonoBehaviour
 
     [SerializeField] private BattleManager battleManager;
 
+    [SerializeField] private ResonanceManager resonanceManager;
+
     [Header("Canvas References")]
 
     [SerializeField] private GameObject teamSelectionUI;
@@ -74,7 +76,8 @@ public class SetManager : MonoBehaviour
     void Start()
     {
         lastRival = enemyRivalSOs.Count-1;
-        battleManager.InitializeEnemyTeam(enemyRivalSOs[currentRival].firstTeam);
+
+        battleManager.InitializeEnemyTeam(enemyRivalSOs[currentRival].firstTeam, enemyRivalSOs[currentRival].enemyResonance );
         StartSet();
     }
     public void StartSet()
@@ -103,7 +106,7 @@ public class SetManager : MonoBehaviour
         setWinner = Winner.Draw;
 
         
-        battleManager.InitializeEnemyTeam(enemyRivalSOs[currentRival].firstTeam);
+        battleManager.InitializeEnemyTeam(enemyRivalSOs[currentRival].firstTeam, enemyRivalSOs[currentRival].enemyResonance);
 
         
         StartSet(); 
@@ -121,7 +124,7 @@ public class SetManager : MonoBehaviour
             }
             else
             {
-                battleManager.InitializeEnemyTeam(enemyRivalSOs[currentRival].secondTeam);
+                battleManager.InitializeEnemyTeam(enemyRivalSOs[currentRival].secondTeam,enemyRivalSOs[currentRival].enemyResonance);
             }
 
         }
@@ -167,21 +170,34 @@ public class SetManager : MonoBehaviour
             replayButton.SetActive(true);
         }
 
+        battleManager.winnerText.text = "";
         battleManager.StopAllCoroutines();
         EndScreen.SetActive(true);
     }
     public void RestartRound()
     {
-        cassinoUI.SetActive(true);
-        money.dinheiro = 1;
+        if(roundWinner != Winner.Draw)
+        {
+            cassinoUI.SetActive(true);
+            money.dinheiro = 1;
+            battleUI.SetActive(false);
+            setUI.SetActive(false);
+            
+        }
+
+        else
+        {
         battleUI.SetActive(false);
         setUI.SetActive(false);
+        teamSelectionUI.SetActive(true);  
+        }
+         
         
     }
 
     public void RestartSet()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+       GameManager.LoadSceneByName("MainMenu");
     }
     
 }

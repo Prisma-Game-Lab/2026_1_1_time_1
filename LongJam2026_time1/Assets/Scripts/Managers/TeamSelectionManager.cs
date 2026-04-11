@@ -11,9 +11,11 @@ public class TeamSelectionManager : MonoBehaviour
 
     [SerializeField] public GameObject battleUI;
 
-    [Header ("Battle Manager")]
+    [Header ("Managers")]
 
     [SerializeField] public BattleManager battleManager;
+
+    [SerializeField] public ResonanceManager resonanceManager;
 
     [Header ("Fish Displays")]
 
@@ -55,7 +57,6 @@ public class TeamSelectionManager : MonoBehaviour
                 teamDisplays[i].gameObject.SetActive(false);
             }
         }
-        ResonanceCheck();
     }
 
     public void InitializeReserveTeam()
@@ -74,6 +75,7 @@ public class TeamSelectionManager : MonoBehaviour
                 reserveDisplays[i].gameObject.SetActive(false);
             }
         }
+        resonanceManager.CheckAllResonances(activeTeam);
     }
 
     public void InitializeUI()
@@ -114,8 +116,7 @@ public class TeamSelectionManager : MonoBehaviour
             activeTeam = new List<FishSO>(newActive);
             reserveTeam = new List<FishSO>(newReserve);
         }
-    
-        ResonanceCheck();
+        resonanceManager.CheckAllResonances(activeTeam);
     }
     public void RequestSave()
     {
@@ -146,51 +147,6 @@ public class TeamSelectionManager : MonoBehaviour
 
     }
 
-    public void ResonanceCheck()
-    {
-        
-        
-        if (activeTeam.Count < 3 || activeTeam[0] == null || activeTeam[1] == null || activeTeam[2] == null)
-        {
-            battleManager.playerResonance = CurrentResonance.None;
-            print("Not enough fish for resonance!");
-            return; 
-        }
-
-        
-        FishTribes t0 = activeTeam[0].fishTribe;
-        FishTribes t1 = activeTeam[1].fishTribe;
-        FishTribes t2 = activeTeam[2].fishTribe;
-
-        
-        if (t0 == FishTribes.Peixe && t1 == FishTribes.Peixe && t2 == FishTribes.Peixe)
-        {
-            battleManager.playerResonance = CurrentResonance.Fish;
-            print("FISH RESONANCE ACTIVATED");
-        }
-        else if (t0 == FishTribes.Molusco && t1 == FishTribes.Molusco && t2 == FishTribes.Molusco)
-        {
-            battleManager.playerResonance = CurrentResonance.Mollusk;
-            print("MOLLUSK RESONANCE ACTIVATED");
-        }
-        else if (t0 == FishTribes.Crustáceo && t1 == FishTribes.Crustáceo && t2 == FishTribes.Crustáceo)
-        {
-            battleManager.playerResonance = CurrentResonance.Crustacean;
-            print("CRUSTACEAN RESONANCE ACTIVATED");
-        }
-        
-        else if (t0 != t1 && t0 != t2 && t1 != t2)
-        {
-            battleManager.playerResonance = CurrentResonance.Joker;
-            print("JOKER RESONANCE ACTIVATED");
-        }
-        
-        else 
-        {
-            battleManager.playerResonance = CurrentResonance.None;
-            print("No Resonance Active :(");
-        }
-    }
 
     public void AddFish(FishSO fish)
     {

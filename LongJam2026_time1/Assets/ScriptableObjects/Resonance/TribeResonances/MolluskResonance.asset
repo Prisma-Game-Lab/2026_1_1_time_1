@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f63b2162f3660d4f81abe1604bc7ced, type: 3}
+  m_Name: MolluskResonance
+  m_EditorClassIdentifier: 
+  resonanceName: Sorte de molusco
+  nameConditions: []
+  tribeConditions: 0100000001000000
+  targetTribe: 1
+  atkIncrease: 0
+  hpIncrease: 0
+  critIncrease: 0.05

@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rivalName: Fortune Shark
   firstTeam:
-  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
-  - {fileID: 11400000, guid: 81b2e0968a194da46a79a8df022c20d6, type: 2}
-  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
+  - {fileID: 11400000, guid: 9f5ab81bcbc6abd4e86533167de7c1e7, type: 2}
+  - {fileID: 11400000, guid: 85786ad906d5c9e419a3ee9e3cc7c75c, type: 2}
+  - {fileID: 11400000, guid: 65ea0a2a3ed06d44b84a0b23f9499e27, type: 2}
   secondTeam:
   - {fileID: 11400000, guid: a43b1dc8e3f841d47b7e27d8f054742e, type: 2}
-  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
-  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
-  rivalSprite: {fileID: 0}
+  - {fileID: 11400000, guid: 85786ad906d5c9e419a3ee9e3cc7c75c, type: 2}
+  - {fileID: 11400000, guid: 65ea0a2a3ed06d44b84a0b23f9499e27, type: 2}
+  rivalSprite: {fileID: 21300000, guid: 9e42b1a15b95eeb46a41902c7bc11a89, type: 3}
+  enemyResonance: {fileID: 11400000, guid: 99c431e1acd3cbe468a4519fa3505a58, type: 2}

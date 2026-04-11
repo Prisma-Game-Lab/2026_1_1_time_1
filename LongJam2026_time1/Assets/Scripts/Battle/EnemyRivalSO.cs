@@ -21,5 +21,9 @@ public class EnemyRivalSO : ScriptableObject
     [Header("Rival Sprite")]
 
     public Sprite rivalSprite;
+
+    [Header("Rival Resonance")]
+
+    public ResonanceSO enemyResonance;
 }
 

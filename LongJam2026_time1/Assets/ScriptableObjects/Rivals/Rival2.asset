@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c4a55a4ec03b9488bdfa94e8af2a79, type: 3}
   m_Name: Rival2
   m_EditorClassIdentifier: 
-  rivalName: Jane Polvo
+  rivalName: "Jane Crust\xE1cea"
   firstTeam:
-  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
-  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
-  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
+  - {fileID: 11400000, guid: 943bd5398a4335c4080812fdb0bde95e, type: 2}
+  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
+  - {fileID: 11400000, guid: d93a75e7d350a2a488d934a94cefdee0, type: 2}
   secondTeam:
-  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
-  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
-  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
-  rivalSprite: {fileID: 0}
+  - {fileID: 11400000, guid: 31b765a2027eee24ebe4df768336e327, type: 2}
+  - {fileID: 11400000, guid: 30f00241300e5b64a84a84a26a569c38, type: 2}
+  - {fileID: 11400000, guid: 560041cebe70f4645b3bd22f3de627fd, type: 2}
+  rivalSprite: {fileID: 21300000, guid: 9e42b1a15b95eeb46a41902c7bc11a89, type: 3}
+  enemyResonance: {fileID: 11400000, guid: 38b37c5108e1f6e44992524dea0e47fd, type: 2}
