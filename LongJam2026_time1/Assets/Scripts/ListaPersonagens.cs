@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -8,7 +10,21 @@ using UnityEditor;
 public class ListaPersonagens : MonoBehaviour
 {
     // Lista com os Bichos
+
+    [Header("All Fish")]
     public List<FishSO> todosOsIndividuos = new List<FishSO>();
+
+    [SerializeField] public List<FishSO> allFish =  new List<FishSO>();
+
+    [Header("All Crustacean")]
+
+    [SerializeField] public List<FishSO> allCrustacean =  new List<FishSO>();
+
+    [Header("All Mollusks")]
+
+    public List<FishSO> allMollusks =  new List<FishSO>();
+
+    
 
     // O [ContextMenu] cria uma opcoo no menu do componente
     [ContextMenu("Carregar Todos os Individuos")]

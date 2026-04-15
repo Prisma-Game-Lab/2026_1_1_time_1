@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cassino.unity
     guid: 50f191ecc3afdf341b959bf4f5c6a1a7
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 20cb903d3fb0e7143a9598104c50125d
   m_configObjects: {}

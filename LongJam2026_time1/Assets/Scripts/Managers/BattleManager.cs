@@ -4,8 +4,16 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Diagnostics.Tracing;
+using System.Runtime.CompilerServices;
 
+public enum BattleTime
+{
+    Normal,
+    Paused,
+    FastForwarded,
+    Slowed,
 
+}
 
 public class BattleManager : MonoBehaviour
 {
@@ -30,7 +38,13 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private FishDisplay[] playerSlots; 
     [SerializeField] private FishDisplay[] enemySlots;
 
+    [Header("Time Buttons")]
 
+    [SerializeField] private Button pauseButton;
+
+    [SerializeField] private Button fastForwardButton;
+
+    [SerializeField] private Button slowDownButton;
 
     [Header("Settings")]
     [SerializeField] private float timeBetweenTurns = 1.2f;
@@ -53,6 +67,31 @@ public class BattleManager : MonoBehaviour
 
     private ResonanceSO pendingEnemyResonance;
 
+    private BattleTime currentTime = BattleTime.Normal;
+
+    
+    private float baseTimeBetweenTurns;
+    private float baseTimeAfterDeathCleanup;
+    
+    private float baseDelayBeforeDamage; 
+
+    private float baseDelayAfterDamage;
+
+    private float baseDamageTextDuration;
+
+    private float baseHitShakeDuration;
+
+    public void Start()
+    {
+        baseTimeBetweenTurns = timeBetweenTurns;
+        baseTimeAfterDeathCleanup = timeAfterDeathCleanup;
+
+        baseDelayBeforeDamage = delayBeforeDamage; 
+        baseDelayAfterDamage = delayAfterDamage;
+
+        baseDamageTextDuration = damageTextDuration;
+        baseHitShakeDuration = hitShakeDuration; 
+    }
     public void StartBattle()
     {
         InitializeBattle();
@@ -120,7 +159,7 @@ public class BattleManager : MonoBehaviour
         
         targetSlots[index].fishHealth.text = newHealth.ToString();
     }
-}
+    }
 
     void ExecuteAttack(BattleFish attacker, List<BattleFish> opponentTeam, bool isAttackerPlayer)
     {
@@ -177,8 +216,6 @@ public class BattleManager : MonoBehaviour
         return null;
     }
 
-    
-    
     void CleanupDeadFish()
     {
         playerTeam.RemoveAll(f => f.IsDead);
@@ -295,7 +332,7 @@ public class BattleManager : MonoBehaviour
        pendingEnemyResonance = resonance;
         UpdateUI();
     }
-
+    
     public void ActivatePlayerResonance()
     {
         if(resonanceManager.currentPlayerResonance != null)
@@ -346,5 +383,88 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
+    public void SetButtonColor(Button btn, Color color)
+    {
+        btn.GetComponent<Image>().color = color;
+    }
+    public void ToggleNormalTime()
+    {
+        currentTime = BattleTime.Normal;
+        timeBetweenTurns = baseTimeBetweenTurns;
+        timeAfterDeathCleanup = baseTimeAfterDeathCleanup;
+
+        delayBeforeDamage = baseDelayBeforeDamage; 
+        delayAfterDamage = baseDelayAfterDamage;
+
+        damageTextDuration = baseDamageTextDuration;
+        hitShakeDuration = baseHitShakeDuration; 
+    }
+
+    public void TogglePause()
+    {
+        //Sla como fazer isso 
+    }
+
+    public void ToggleSlowDown()
+    {
+        if(currentTime == BattleTime.Slowed)
+        {
+            SetButtonColor(slowDownButton, Color.white);
+            ToggleNormalTime();
+        }
+
+        else
+        {
+        
+        SetButtonColor(pauseButton, Color.white);
+        SetButtonColor(fastForwardButton, Color.white);
+        SetButtonColor(slowDownButton, Color.green);
+        ToggleNormalTime();
+
+        currentTime = BattleTime.Slowed;
+
+        timeBetweenTurns *= 2;
+        timeAfterDeathCleanup *= 2;
+
+        delayBeforeDamage *= 2; 
+        delayAfterDamage *= 2;
+
+        damageTextDuration *= 2;
+        hitShakeDuration *= 2;
+
+        }
+    }
     
+    public void ToggleFastForward()
+    {
+       if(currentTime == BattleTime.FastForwarded)
+        {
+            SetButtonColor(fastForwardButton, Color.white);
+            ToggleNormalTime();
+        }
+
+        else
+        {
+        
+        SetButtonColor(pauseButton, Color.white);
+        SetButtonColor(slowDownButton, Color.white);
+        SetButtonColor(fastForwardButton, Color.green);
+        ToggleNormalTime();
+
+        currentTime = BattleTime.FastForwarded;
+
+        timeBetweenTurns /= 2;
+        timeAfterDeathCleanup /= 2;
+
+        delayBeforeDamage /= 2; 
+        delayAfterDamage /= 2;
+
+        damageTextDuration /= 2;
+        hitShakeDuration /= 2;
+
+        }
+        
+ 
+    }
 }

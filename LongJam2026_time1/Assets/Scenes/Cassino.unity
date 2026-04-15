@@ -646,6 +646,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1969977448}
     - target: {fileID: 4861902553938961562, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: activeTeam.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861902553938961562, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
       propertyPath: reserveTeam.Array.size
       value: 0
       objectReference: {fileID: 0}

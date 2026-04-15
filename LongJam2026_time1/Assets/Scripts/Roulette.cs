@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+//using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+
+
 
 public class Roulette : MonoBehaviour
 {
@@ -12,18 +16,31 @@ public class Roulette : MonoBehaviour
 
     private Rigidbody2D rbody;
     int inRotate;
+    private GameObject currentSpinning;
 
     public int dinheiro = 1;
-    
+
     [Header("Manager Reference")]
     [SerializeField] private TeamSelectionManager teamManager;
 
-    
+
 
     [Header ("UI References")]
 
     [SerializeField] public TextMeshProUGUI prizeText;
     [SerializeField] public TextMeshProUGUI moneyText;
+
+    [SerializeField] public GameObject tribeRoulette;
+
+    [SerializeField] public GameObject fishRoulette;
+    [SerializeField] public GameObject gmTribeRoulette;
+
+    [SerializeField] public GameObject gmFishRoulette;
+
+    [Header("UI References")]
+
+    [SerializeField] public SpriteRenderer[] rouletteSprites;
+
 
     [Header("Canvas References")]
 
@@ -41,38 +58,48 @@ public class Roulette : MonoBehaviour
 
     [SerializeField] private float endRouletteTimer = 5;
 
-    private void Start()
-    {
-        rbody = GetComponent<Rigidbody2D>();
-    }
+    private FishTribes rewardTribe;
+
+    private List<FishSO> rewardList = new List<FishSO>();
+
+    private FishSO rewardFish;
 
     float t;
     private void Update()
-    {           
+    {
         moneyText.text = "Dinheiro: " + dinheiro;
 
-        if (rbody.angularVelocity > 0)
+        if (rbody != null && rbody.angularVelocity > 0)
         {
             rbody.angularVelocity -= StopPower*Time.deltaTime;
 
-            rbody.angularVelocity =  Mathf.Clamp(rbody.angularVelocity, 0 , 1440);
+            rbody.angularVelocity = Mathf.Clamp(rbody.angularVelocity, 0, 1440);
         }
 
-        if(rbody.angularVelocity == 0 && inRotate == 1) 
+        if (rbody != null && rbody.angularVelocity == 0 && inRotate == 1)
         {
             t +=1*Time.deltaTime;
             if(t >= 0.5f)
             {
-                GetReward();
-
+                // Reset state before calling handlers so SpinFishWheel() inside GetTribe() can set inRotate = 1
                 inRotate = 0;
                 t = 0;
+
+                if (currentSpinning == tribeRoulette)
+                    GetTribe();
+                else if (currentSpinning == fishRoulette)
+                    GetFish();
             }
         }
     }
 
+    // Parameterless wrapper for Unity UI button — spins the tribe roulette
+    public void RoteteTribe()
+    {
+        Rotete(tribeRoulette);
+    }
 
-    public void Rotete() 
+    public void Rotete(GameObject target)
     {
         if(dinheiro > 0)
         {
@@ -81,72 +108,151 @@ public class Roulette : MonoBehaviour
             print(RotatePower);
             dinheiro -= 1;
 
-
             if(inRotate == 0)
             {
+                currentSpinning = target;
+                rbody = target.GetComponent<Rigidbody2D>();
                 rbody.AddTorque(RotatePower);
                 inRotate = 1;
             }
         }
     }
 
-
-
-    public void GetReward()
+    private void SpinFishWheel()
     {
-        float rot = transform.eulerAngles.z;
+        SetImages();
+        RotatePower = Random.Range(500, 1500);
+        currentSpinning = fishRoulette;
+        rbody = fishRoulette.GetComponent<Rigidbody2D>();
+        rbody.AddTorque(RotatePower);
+        inRotate = 1;
+    }
+
+
+    public void GetTribe()
+    {
+        float rot = tribeRoulette.transform.eulerAngles.z;
         string triboSorteada = "";
 
         if (rot > 0 && rot <= 60)
         {
-            GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,30);
+            tribeRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,30);
             triboSorteada = "Crustáceo";
+            rewardTribe = FishTribes.Crustáceo;
+            rewardList = bancoDeDados.allCrustacean;
         }
         else if (rot > 60 && rot <= 120)
         {
-            GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,90);
+            tribeRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,90);
             triboSorteada = "Peixe";
+            rewardTribe = FishTribes.Peixe;
+            rewardList = bancoDeDados.allFish;
         }
         else if (rot > 120 && rot <= 180)
         {
-            GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,150);
+            tribeRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,150);
             triboSorteada = "Molusco";
+            rewardTribe = FishTribes.Molusco;
+            rewardList = bancoDeDados.allMollusks;
         }
         else if (rot > 180 && rot <= 240)
         {
-            GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,210);
+            tribeRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,210);
             triboSorteada = "Crustáceo";
+            rewardTribe = FishTribes.Crustáceo;
+            rewardList = bancoDeDados.allCrustacean;
         }
         else if (rot > 240 && rot <= 300)
         {
-            GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,270);
+            tribeRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,270);
             triboSorteada = "Peixe";
+            rewardTribe = FishTribes.Peixe;
+            rewardList = bancoDeDados.allFish;
         }
         else if (rot > 300 && rot <= 360)
         {
-            GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,330);
+            tribeRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,330);
             triboSorteada = "Molusco";
+            rewardTribe = FishTribes.Molusco;
+            rewardList = bancoDeDados.allMollusks;
         }
 
         Debug.Log(triboSorteada);
-        cassinoUI.SetActive(true);
-        
-        if (bancoDeDados != null && triboSorteada != "")
-        {   
-            FishSO bichoGanhado = bancoDeDados.SortearBicho(triboSorteada);
-        
-            if (bichoGanhado != null)
+        gmTribeRoulette.SetActive(false);
+        gmFishRoulette.SetActive(true);
+
+        SpinFishWheel();
+    }
+
+    public void SetImages()
+    {
+        if(rewardTribe == FishTribes.Peixe)
+        {
+            for(int i=0; i < 5; i++)
             {
-                prizeText.text = "VOCÊ GANHOU UM: " + bichoGanhado.fishName;
-                teamManager.AddFish(bichoGanhado);
-                Debug.Log("VOCÊ GANHOU UM: " + bichoGanhado.fishName);
-                if(dinheiro <= 0)
-                {
-                    StartCoroutine(EndRoulette());
-                }
+                rouletteSprites[i].sprite = bancoDeDados.allFish[i].fishSprite;
             }
         }
 
+        else if(rewardTribe == FishTribes.Molusco)
+        {
+            for(int i=0; i < 5; i++)
+            {
+                rouletteSprites[i].sprite = bancoDeDados.allMollusks[i].fishSprite;
+            }
+        }
+
+        else if(rewardTribe == FishTribes.Crustáceo)
+        {
+            for(int i=0; i < 5; i++)
+            {
+                rouletteSprites[i].sprite = bancoDeDados.allCrustacean[i].fishSprite;
+            }
+        }
+
+
+    }
+
+    public void GetFish()
+    {
+        if(bancoDeDados == null) return;
+
+        float rot = fishRoulette.transform.eulerAngles.z;
+
+        if (rot > 0 && rot <= 72)
+        {
+            fishRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,36);
+            rewardFish = rewardList[0];
+
+        }
+        else if (rot > 72 && rot <= 144)
+        {
+            fishRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,108);
+            rewardFish = rewardList[1];
+
+        }
+        else if (rot > 144 && rot <= 216)
+        {
+            fishRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,180);
+            rewardFish = rewardList[2];
+
+        }
+        else if (rot > 216 && rot <= 288)
+        {
+            fishRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,252);
+            rewardFish = rewardList[3];
+
+        }
+        else if (rot > 288 && rot <= 360)
+        {
+            fishRoulette.GetComponent<RectTransform>().eulerAngles = new Vector3(0,0,324);
+            rewardFish = rewardList[4];
+
+        }
+
+        prizeText.text = "VOCÊ GANHOU UM: " + rewardFish.fishName;
+        teamManager.AddFish(rewardFish);
+        StartCoroutine(EndRoulette());
 
     }
 
@@ -154,6 +260,8 @@ public class Roulette : MonoBehaviour
     {
         yield return new WaitForSeconds(endRouletteTimer);
         prizeText.text = "";
+        gmTribeRoulette.SetActive(true);
+        gmFishRoulette.SetActive(false);
         cassinoEroletaUI.SetActive(false);
         teamSelectionUI.SetActive(true);
         teamManager.InitializeUI();
