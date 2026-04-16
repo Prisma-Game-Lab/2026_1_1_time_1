@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -94,6 +95,7 @@ public class BattleManager : MonoBehaviour
     }
     public void StartBattle()
     {
+        StopAllCoroutines();
         InitializeBattle();
         StartCoroutine(BattleLoop());
     }
@@ -109,6 +111,8 @@ public class BattleManager : MonoBehaviour
         foreach (var so in enemyTeamSO) 
             if (so != null) enemyTeam.Add(new BattleFish(so));
         
+
+        AudioManager.Instance?.PlayLoopingSFX("auraSFX");
         ActivateResonance();
         UpdateUI();
         ApplyAuras();
@@ -218,8 +222,15 @@ public class BattleManager : MonoBehaviour
 
     void CleanupDeadFish()
     {
+        bool anyDied = playerTeam.Any(f => f.IsDead) || enemyTeam.Any(f => f.IsDead);
+
         playerTeam.RemoveAll(f => f.IsDead);
         enemyTeam.RemoveAll(f => f.IsDead);
+
+        if (anyDied)
+        {
+            AudioManager.Instance?.PlaySFX("deathSFX");
+        }
     }
 
     void UpdateUI()
@@ -274,6 +285,7 @@ public class BattleManager : MonoBehaviour
             setManager.roundWinner = Winner.Draw;
         }
 
+        AudioManager.Instance?.StopLoopingSFX();
         setManager.EndRound();
         if(setManager.setWinner == Winner.Draw)
         StartCoroutine(EndBattle());
@@ -390,6 +402,8 @@ public class BattleManager : MonoBehaviour
     }
     public void ToggleNormalTime()
     {
+        Time.timeScale = 1;
+
         currentTime = BattleTime.Normal;
         timeBetweenTurns = baseTimeBetweenTurns;
         timeAfterDeathCleanup = baseTimeAfterDeathCleanup;
@@ -403,7 +417,21 @@ public class BattleManager : MonoBehaviour
 
     public void TogglePause()
     {
-        //Sla como fazer isso 
+        if(currentTime == BattleTime.Paused)
+        {
+            Time.timeScale = 1;
+            SetButtonColor(pauseButton, Color.white);
+            currentTime = BattleTime.Normal;
+        }
+        else
+        {
+            ToggleNormalTime();
+            SetButtonColor(pauseButton, Color.green);
+            SetButtonColor(fastForwardButton, Color.white);
+            SetButtonColor(slowDownButton, Color.white);
+            currentTime = BattleTime.Paused;
+            Time.timeScale = 0;
+        }
     }
 
     public void ToggleSlowDown()
@@ -416,6 +444,7 @@ public class BattleManager : MonoBehaviour
 
         else
         {
+        
         
         SetButtonColor(pauseButton, Color.white);
         SetButtonColor(fastForwardButton, Color.white);
@@ -446,6 +475,7 @@ public class BattleManager : MonoBehaviour
 
         else
         {
+        
         
         SetButtonColor(pauseButton, Color.white);
         SetButtonColor(slowDownButton, Color.white);

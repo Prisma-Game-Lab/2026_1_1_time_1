@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6c4a55a4ec03b9488bdfa94e8af2a79, type: 3}
-  m_Name: Rival2
+  m_Name: "John Crust\xE1ceo"
   m_EditorClassIdentifier: 
-  rivalName: "Jane Crust\xE1cea"
+  rivalName: "John Crust\xE1ceo"
+  rivalFlavor: 
   firstTeam:
   - {fileID: 11400000, guid: 943bd5398a4335c4080812fdb0bde95e, type: 2}
   - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
@@ -21,5 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31b765a2027eee24ebe4df768336e327, type: 2}
   - {fileID: 11400000, guid: 30f00241300e5b64a84a84a26a569c38, type: 2}
   - {fileID: 11400000, guid: 560041cebe70f4645b3bd22f3de627fd, type: 2}
-  rivalSprite: {fileID: 21300000, guid: 9e42b1a15b95eeb46a41902c7bc11a89, type: 3}
+  rivalSprite: {fileID: 21300000, guid: c1b1ee16960f138458cf7014e08145fd, type: 3}
   enemyResonance: {fileID: 11400000, guid: 38b37c5108e1f6e44992524dea0e47fd, type: 2}

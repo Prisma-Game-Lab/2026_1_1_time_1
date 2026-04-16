@@ -15,12 +15,14 @@ public class ResonanceButton : MonoBehaviour
     public void ActivateResonance()
     {
         resonanceManager.SetPlayerResonance(currentResonance);
+        resonanceManager.SetButtonColors();
+        
     }
 
     public void SetResonanceButton(ResonanceSO resonance)
     {
         currentResonance = resonance;
-        buttonText.text = currentResonance.resonanceName;   
+        buttonText.text = currentResonance.resonanceName;
     }
     
 }

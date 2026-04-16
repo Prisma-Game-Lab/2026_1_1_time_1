@@ -8,6 +8,7 @@ public class TimeSortManager : MonoBehaviour
 
     [SerializeField] private TeamSelectionManager teamManager;
     [SerializeField] private ListaPersonagens bancoDeDados;
+
     
     [Header("Canvas References")]
 
@@ -93,10 +94,12 @@ private void ReativarLista(List<FishDisplay> slots)
 
     private void EndRoulette()
     {
+
         timeSortUI.SetActive(false);
         teamSelectionUI.SetActive(true);
-        teamManager.InitializeUI();
         setUI.SetActive(true);
+        teamManager.InitializeUI();
+        
 
     }
 }

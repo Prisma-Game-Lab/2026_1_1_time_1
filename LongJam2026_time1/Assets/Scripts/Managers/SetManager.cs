@@ -42,6 +42,10 @@ public class SetManager : MonoBehaviour
 
     [SerializeField] private int maxRounds = 2;
 
+    [SerializeField] private float rivalScreenTime = 3f;
+
+    [SerializeField] private float fadeDuration = 1.0f;
+
     [Header("Manager References")]
 
     [SerializeField] private TeamSelectionManager teamManager;
@@ -51,6 +55,9 @@ public class SetManager : MonoBehaviour
     [SerializeField] private ResonanceManager resonanceManager;
 
     [SerializeField] private TimeSortManager sortManager;
+
+    [SerializeField] private RivalScreen rivalManager;
+
 
     [Header("Canvas References")]
 
@@ -65,6 +72,10 @@ public class SetManager : MonoBehaviour
     [SerializeField] private GameObject setUI;
 
     [SerializeField] private GameObject teamSortUI;
+
+    [SerializeField] private GameObject rivalUI;
+
+    [SerializeField] private Animator fadeAnim;
 
     [HideInInspector] public Winner roundWinner;
 
@@ -91,19 +102,30 @@ public class SetManager : MonoBehaviour
         EndScreen.SetActive(false);
         replayButton.SetActive(false);
         nextRivalButton.SetActive(false);
+        rivalManager.SetUp(enemyRivalSOs[currentRival]);
+        rivalUI.SetActive(true);
+        teamSortUI.SetActive(false);
+        playerCount.text = playerRounds.ToString() + "/" + maxRounds.ToString();
+        enemyCount.text = enemyRounds.ToString() + "/" + maxRounds.ToString();
+        setUI.SetActive(false);
+        
+        StartCoroutine(StartSetAfterRivalScreen());
+    }
 
+    private IEnumerator StartSetAfterRivalScreen()
+    {
+        yield return new WaitForSeconds(rivalScreenTime);
+        fadeAnim.SetTrigger("Start");
+        yield return new WaitForSeconds(fadeDuration);
+        rivalUI.SetActive(false);
         teamManager.reserveTeam.Clear();
         teamManager.activeTeam.Clear();
         sortManager.membros = 0;
         sortManager.ResetarSlots();
-
         teamSortUI.SetActive(true);
         money.dinheiro = 1;
         setUI.SetActive(false);
-        
-        playerCount.text = playerRounds.ToString() + "/" + maxRounds.ToString();
-        enemyCount.text = enemyRounds.ToString() + "/" + maxRounds.ToString();
-        
+        fadeAnim.SetTrigger("End");
     }
     public void LoadNextRival()
     {
@@ -150,6 +172,8 @@ public class SetManager : MonoBehaviour
 
         }
 
+
+
        
     }
 
@@ -185,6 +209,14 @@ public class SetManager : MonoBehaviour
     }
     public void RestartRound()
     {
+        StartCoroutine(RestartRoundTransition());
+    }
+
+    private IEnumerator RestartRoundTransition()
+    {
+        fadeAnim.SetTrigger("Start");
+        yield return new WaitForSeconds(fadeDuration);
+
         if(roundWinner != Winner.Draw)
         {
             cassinoUI.SetActive(true);
@@ -193,22 +225,21 @@ public class SetManager : MonoBehaviour
             money.dinheiro = 1;
             battleUI.SetActive(false);
             setUI.SetActive(false);
-            
         }
-
         else
         {
-        battleUI.SetActive(false);
-        setUI.SetActive(false);
-        teamSelectionUI.SetActive(true);  
+            battleUI.SetActive(false);
+            setUI.SetActive(true);
+            teamSelectionUI.SetActive(true);
         }
-         
-        
+
+        fadeAnim.SetTrigger("End");
     }
 
     public void RestartSet()
     {
        GameManager.LoadSceneByName("MainMenu");
     }
+
     
 }

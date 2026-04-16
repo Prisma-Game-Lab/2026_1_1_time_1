@@ -9,6 +9,10 @@ public class EnemyRivalSO : ScriptableObject
 
     [Header("Rival Name")]
     public string rivalName;
+
+    [Header("Flavor Text")]
+
+    public string rivalFlavor;
     
 
    [Header("Rival's Teams")]

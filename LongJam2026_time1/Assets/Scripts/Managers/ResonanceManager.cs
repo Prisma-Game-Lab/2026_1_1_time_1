@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResonanceManager : MonoBehaviour
 {
@@ -22,8 +23,10 @@ public class ResonanceManager : MonoBehaviour
 
     [SerializeField] public ResonanceButton[] resButtons;
 
+
     public void CheckAllResonances(List<FishSO> team)
     {
+        currentPlayerResonance = null;
         activeResonances.Clear(); 
 
         bool isActive;
@@ -43,6 +46,7 @@ public class ResonanceManager : MonoBehaviour
         if(activeResonances.Count() > 0)
             currentPlayerResonance = activeResonances[0];
         SetButtons();
+        SetButtonColors();
     }
 
 
@@ -118,6 +122,22 @@ public class ResonanceManager : MonoBehaviour
         {
             gmButtons[i].SetActive(true);
             resButtons[i].SetResonanceButton(activeResonances[i]);
+        }
+    }
+
+    public void SetButtonColors()
+    {
+        foreach(var button in gmButtons)
+        {
+            ResonanceButton resonanceButton = button.GetComponent<ResonanceButton>();
+            if (resonanceButton.currentResonance != currentPlayerResonance)
+            {
+                resonanceButton.buttonText.color = Color.black;
+            }
+            else
+            {
+                resonanceButton.buttonText.color = Color.blue;
+            }
         }
     }
 

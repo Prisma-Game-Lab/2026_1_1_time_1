@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fortune Shark
   m_EditorClassIdentifier: 
   rivalName: Fortune Shark
+  rivalFlavor: A CASA SEMPRE GANHA
   firstTeam:
   - {fileID: 11400000, guid: 9f5ab81bcbc6abd4e86533167de7c1e7, type: 2}
   - {fileID: 11400000, guid: 85786ad906d5c9e419a3ee9e3cc7c75c, type: 2}

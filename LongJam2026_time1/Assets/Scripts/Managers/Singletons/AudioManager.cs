@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     public AudioClip[] musicSounds, sfxSounds;
-    public AudioSource musicSource, sfxSource;
+    public AudioSource musicSource, sfxSource, loopingSfxSource;
     
     public AudioMixerGroup sfxMixerGroup;
 
@@ -70,6 +70,11 @@ public class AudioManager : MonoBehaviour
     {
         musicSource.Stop();
     }
+
+    public void StopLoopingSFX()
+    {
+        loopingSfxSource.Stop();
+    }
     public void PlayMusic(string name)
     {
         AudioClip s = Array.Find(musicSounds, x => x.name == name);
@@ -86,6 +91,15 @@ public class AudioManager : MonoBehaviour
         if (s != null)
         {
             sfxSource.PlayOneShot(s);
+        }
+    }
+
+    public void PlayLoopingSFX(string name)
+    {
+        AudioClip s = Array.Find(sfxSounds, x => x.name == name);
+        if (s != null)
+        {
+            loopingSfxSource.PlayOneShot(s);
         }
     }
 

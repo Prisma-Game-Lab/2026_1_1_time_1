@@ -17,6 +17,10 @@ public class TeamSelectionManager : MonoBehaviour
 
     [SerializeField] public ResonanceManager resonanceManager;
 
+    [SerializeField] private Animator fadeAnim;
+
+    [SerializeField] private float fadeDuration = 1.0f;
+
     [Header ("Fish Displays")]
 
     [SerializeField] public FishDisplay[] teamDisplays;
@@ -57,6 +61,8 @@ public class TeamSelectionManager : MonoBehaviour
                 teamDisplays[i].gameObject.SetActive(false);
             }
         }
+
+        resonanceManager.CheckAllResonances(activeTeam);
     }
 
     public void InitializeReserveTeam()
@@ -75,7 +81,6 @@ public class TeamSelectionManager : MonoBehaviour
                 reserveDisplays[i].gameObject.SetActive(false);
             }
         }
-        resonanceManager.CheckAllResonances(activeTeam);
     }
 
     public void InitializeUI()
@@ -138,13 +143,18 @@ public class TeamSelectionManager : MonoBehaviour
 
     public void ToBattle()
     {
-        
-        SaveTeamLayout();
+        StartCoroutine(ToBattleTransition());
+    }
+
+    private IEnumerator ToBattleTransition()
+    {
+        fadeAnim.SetTrigger("Start");
+        yield return new WaitForSeconds(fadeDuration);
         SetPlayerBattleTeam();
         battleUI.SetActive(true);
         battleManager.StartBattle();
         teamSelectionUI.SetActive(false);
-
+        fadeAnim.SetTrigger("End");
     }
 
 

@@ -58,6 +58,10 @@ public class Roulette : MonoBehaviour
 
     [SerializeField] private float endRouletteTimer = 5;
 
+    [SerializeField] private Animator fadeAnim;
+
+    [SerializeField] private float fadeDuration = 1.0f;
+
     private FishTribes rewardTribe;
 
     private List<FishSO> rewardList = new List<FishSO>();
@@ -252,6 +256,8 @@ public class Roulette : MonoBehaviour
         }
 
         prizeText.text = "VOCÊ GANHOU UM: " + rewardFish.fishName;
+        
+        AudioManager.Instance?.PlaySFX("rewardSFX");
         teamManager.AddFish(rewardFish);
         StartCoroutine(EndRoulette());
 
@@ -261,13 +267,15 @@ public class Roulette : MonoBehaviour
     {
         yield return new WaitForSeconds(endRouletteTimer);
         prizeText.text = "";
+        fadeAnim.SetTrigger("Start");
+        yield return new WaitForSeconds(fadeDuration);
         gmTribeRoulette.SetActive(true);
         gmFishRoulette.SetActive(false);
         cassinoEroletaUI.SetActive(false);
         teamSelectionUI.SetActive(true);
         teamManager.InitializeUI();
         setUI.SetActive(true);
-
+        fadeAnim.SetTrigger("End");
     }
 
 
