@@ -96,6 +96,7 @@ public class Roulette : MonoBehaviour
     // Parameterless wrapper for Unity UI button — spins the tribe roulette
     public void RoteteTribe()
     {
+        tribeRoulette.SetActive(true);
         Rotete(tribeRoulette);
     }
 

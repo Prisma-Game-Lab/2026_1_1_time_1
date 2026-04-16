@@ -67,6 +67,30 @@ public class TimeSortManager : MonoBehaviour
         }
     }
 
+    public void ResetarSlots()
+{
+    // 1. Resetar o contador de membros selecionados
+    membros = 0;
+
+    // 2. Reativar todos os GameObjects dos slots
+    ReativarLista(slotsMoluscos);
+    ReativarLista(slotsPeixes);
+    ReativarLista(slotsCrustaceos);
+
+    // 3. Sortear novos peixes para os slots reativados
+    SortearTimeDisponivel();
+}
+
+private void ReativarLista(List<FishDisplay> slots)
+{
+    foreach (FishDisplay slot in slots)
+    {
+        slot.gameObject.SetActive(true);
+        // Opcional: Limpar os dados visuais antes do novo sorteio
+        // slot.fishSprite.sprite = null; 
+    }
+}
+
     private void EndRoulette()
     {
         timeSortUI.SetActive(false);

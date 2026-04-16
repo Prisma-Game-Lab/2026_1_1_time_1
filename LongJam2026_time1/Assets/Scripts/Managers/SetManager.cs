@@ -50,6 +50,8 @@ public class SetManager : MonoBehaviour
 
     [SerializeField] private ResonanceManager resonanceManager;
 
+    [SerializeField] private TimeSortManager sortManager;
+
     [Header("Canvas References")]
 
     [SerializeField] private GameObject teamSelectionUI;
@@ -57,8 +59,12 @@ public class SetManager : MonoBehaviour
     [SerializeField] private GameObject battleUI;
 
     [SerializeField] private GameObject cassinoUI;
+    [SerializeField] private GameObject tribeRollete;
+    [SerializeField] private GameObject gachaUI;
 
     [SerializeField] private GameObject setUI;
+
+    [SerializeField] private GameObject teamSortUI;
 
     [HideInInspector] public Winner roundWinner;
 
@@ -87,8 +93,11 @@ public class SetManager : MonoBehaviour
         nextRivalButton.SetActive(false);
 
         teamManager.reserveTeam.Clear();
+        teamManager.activeTeam.Clear();
+        sortManager.membros = 0;
+        sortManager.ResetarSlots();
 
-        cassinoUI.SetActive(true);
+        teamSortUI.SetActive(true);
         money.dinheiro = 1;
         setUI.SetActive(false);
         
@@ -179,6 +188,8 @@ public class SetManager : MonoBehaviour
         if(roundWinner != Winner.Draw)
         {
             cassinoUI.SetActive(true);
+            tribeRollete.SetActive(true);
+            gachaUI.SetActive(true);
             money.dinheiro = 1;
             battleUI.SetActive(false);
             setUI.SetActive(false);
