@@ -27,6 +27,7 @@ public class TeamOnClick : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
         if (myFishData == null) return;
 
         sortManager.membros += 1;

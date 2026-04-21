@@ -26,6 +26,7 @@ public class TeamSelectionManager : MonoBehaviour
     [SerializeField] public FishDisplay[] teamDisplays;
 
     [SerializeField] public FishDisplay[] reserveDisplays;
+
     
     [Header("Slots")]
     [SerializeField] private FishSlot[] teamSlots;    // Max 3

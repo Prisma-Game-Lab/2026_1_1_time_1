@@ -1,10 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class FishDisplay : MonoBehaviour
+public class FishDisplay : MonoBehaviour, IPointerClickHandler
 {
+
+    [Header("Fish Info Card")]
+    [SerializeField] private FishInfo fishInfoCard;
 
     [Header("Settings")]
 
@@ -36,6 +40,7 @@ public class FishDisplay : MonoBehaviour
 
     private Vector3 originalPos;
     private bool isInitialized = false;
+    private bool isPlayer = true;
 
     [HideInInspector] public FishSO fishData;
 
@@ -63,7 +68,8 @@ public class FishDisplay : MonoBehaviour
         fishDamage.color = (fish.currentDamage > fish.data.fishDamage) ? Color.green : Color.white;
         fishHealth.color = (fish.currentHealth > fish.data.fishMaxHealth) ? Color.green : Color.white;
 
-        float xRotation = !isPlayer ? 180f : 0f; 
+        this.isPlayer = isPlayer;
+        float xRotation = !isPlayer ? 180f : 0f;
         fishSprite.transform.localRotation = Quaternion.Euler(0, xRotation, 0);
     }
 
@@ -211,5 +217,30 @@ public class FishDisplay : MonoBehaviour
             t.localScale = baseScale * pulse;
             yield return null;
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Right) return;
+        if (fishInfoCard == null || fishData == null) return;
+
+        bool isShowing = fishInfoCard.gameObject.activeSelf;
+        if (!isShowing)
+        {
+            fishInfoCard.SetUp(fishData);
+            float xScale = isPlayer ? 1f : -1f;
+            fishInfoCard.transform.localScale = new Vector3(xScale, 1f, 1f);
+            fishInfoCard.gameObject.SetActive(true);
+        }
+        else
+        {
+            fishInfoCard.gameObject.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (fishInfoCard != null && fishInfoCard.gameObject.activeSelf && Input.GetMouseButtonDown(0))
+            fishInfoCard.gameObject.SetActive(false);
     }
 }

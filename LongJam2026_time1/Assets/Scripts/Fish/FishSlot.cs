@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 
 public class FishSlot : MonoBehaviour, IDropHandler
 {
+    
+
     public void OnDrop(PointerEventData eventData)
     {
         GameObject dropped = eventData.pointerDrag;
@@ -16,7 +18,7 @@ public class FishSlot : MonoBehaviour, IDropHandler
             if (transform.childCount > 0)
             {
                 Transform existingFish = transform.GetChild(0);
-            
+
                 // Send the existing fish to the new fish's ORIGINAL home
                 existingFish.SetParent(draggable.parentAfterDrag);
                 existingFish.localPosition = Vector3.zero;
@@ -24,9 +26,11 @@ public class FishSlot : MonoBehaviour, IDropHandler
 
             // UPDATE the draggable's destination to THIS slot
             draggable.parentAfterDrag = transform;
-        
+
             // Save the new layout
             FindObjectOfType<TeamSelectionManager>().RequestSave();
         }
     }
+
+    
 }

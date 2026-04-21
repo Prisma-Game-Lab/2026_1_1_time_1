@@ -47,6 +47,14 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private Button slowDownButton;
 
+    [Header("Time Buttons' Alternate Sprites")]
+
+    [SerializeField] private Sprite pressedPause;
+
+    [SerializeField] private Sprite pressedForward;
+
+    [SerializeField] private Sprite pressedSlow;
+
     [Header("Settings")]
     [SerializeField] private float timeBetweenTurns = 1.2f;
     [SerializeField] private float timeAfterDeathCleanup = 0.4f;
@@ -82,6 +90,12 @@ public class BattleManager : MonoBehaviour
 
     private float baseHitShakeDuration;
 
+    private Sprite unpressedPause;
+
+    private Sprite unpressedSlow;
+
+    private Sprite unpressedForward;
+
     public void Start()
     {
         baseTimeBetweenTurns = timeBetweenTurns;
@@ -91,7 +105,13 @@ public class BattleManager : MonoBehaviour
         baseDelayAfterDamage = delayAfterDamage;
 
         baseDamageTextDuration = damageTextDuration;
-        baseHitShakeDuration = hitShakeDuration; 
+        baseHitShakeDuration = hitShakeDuration;
+
+        unpressedPause = pauseButton.image.sprite;
+
+        unpressedSlow = slowDownButton.image.sprite;
+
+        unpressedForward = fastForwardButton.image.sprite;
     }
     public void StartBattle()
     {
@@ -420,15 +440,19 @@ public class BattleManager : MonoBehaviour
         if(currentTime == BattleTime.Paused)
         {
             Time.timeScale = 1;
-            SetButtonColor(pauseButton, Color.white);
+            //SetButtonColor(pauseButton, Color.white);
+            pauseButton.image.sprite = unpressedPause;
             currentTime = BattleTime.Normal;
         }
         else
         {
             ToggleNormalTime();
-            SetButtonColor(pauseButton, Color.green);
-            SetButtonColor(fastForwardButton, Color.white);
+            //SetButtonColor(pauseButton, Color.green);
+            pauseButton.image.sprite = pressedPause;
+            //SetButtonColor(fastForwardButton, Color.white);
+            fastForwardButton.image.sprite = unpressedForward;
             SetButtonColor(slowDownButton, Color.white);
+
             currentTime = BattleTime.Paused;
             Time.timeScale = 0;
         }
@@ -446,8 +470,10 @@ public class BattleManager : MonoBehaviour
         {
         
         
-        SetButtonColor(pauseButton, Color.white);
-        SetButtonColor(fastForwardButton, Color.white);
+        //SetButtonColor(pauseButton, Color.white);
+        pauseButton.image.sprite = unpressedPause;
+        //SetButtonColor(fastForwardButton, Color.white);
+        fastForwardButton.image.sprite = unpressedForward;
         SetButtonColor(slowDownButton, Color.green);
         ToggleNormalTime();
 
@@ -469,7 +495,8 @@ public class BattleManager : MonoBehaviour
     {
        if(currentTime == BattleTime.FastForwarded)
         {
-            SetButtonColor(fastForwardButton, Color.white);
+            //SetButtonColor(fastForwardButton, Color.white);
+            fastForwardButton.image.sprite = unpressedForward;
             ToggleNormalTime();
         }
 
@@ -477,9 +504,11 @@ public class BattleManager : MonoBehaviour
         {
         
         
-        SetButtonColor(pauseButton, Color.white);
+        //SetButtonColor(pauseButton, Color.white);
+        pauseButton.image.sprite = unpressedPause;
         SetButtonColor(slowDownButton, Color.white);
-        SetButtonColor(fastForwardButton, Color.green);
+        //SetButtonColor(fastForwardButton, Color.green);
+        fastForwardButton.image.sprite = pressedForward;
         ToggleNormalTime();
 
         currentTime = BattleTime.FastForwarded;

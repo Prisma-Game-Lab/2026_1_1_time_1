@@ -20,32 +20,30 @@ public class DraggableFish : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Update the fallback to whatever slot it is currently sitting in
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+
         parentAfterDrag = transform.parent;
 
-        if (draggingContainer != null) 
-        {
+        if (draggingContainer != null)
             transform.SetParent(draggingContainer);
-        }
-        
+
         transform.SetAsLastSibling();
         canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Use screen position directly
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Return to the last valid parentAfterDrag (Slot or Original)
-        transform.SetParent(parentAfterDrag);
-        
-        // Reset local position so it centers on the Slot anchor
-        transform.localPosition = Vector3.zero;
+        if (eventData.button != PointerEventData.InputButton.Left) return;
 
+        transform.SetParent(parentAfterDrag);
+        transform.localPosition = Vector3.zero;
         canvasGroup.blocksRaycasts = true;
     }
 }
