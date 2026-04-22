@@ -71,4 +71,5 @@ public class TutorialManager : MonoBehaviour, IPointerClickHandler
 
     [ContextMenu("Resetar Este Tutorial")]
     public void Resetar() => PlayerPrefs.DeleteKey(tutorialKey);
+
 }

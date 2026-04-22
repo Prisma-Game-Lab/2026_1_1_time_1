@@ -696,10 +696,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CassinoUI
       objectReference: {fileID: 0}
-    - target: {fileID: 786360123154895050, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1887404516684829604, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
       propertyPath: m_Camera
       value: 
@@ -789,12 +785,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1386619212867486804, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3405779220254855740, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2131324972}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
 --- !u!1 &485700522 stripped
 GameObject:
@@ -806,17 +800,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8367914260728997598, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
   m_PrefabInstance: {fileID: 485700521}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &485700524 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6317567368389940936, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
-  m_PrefabInstance: {fileID: 485700521}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &595954596
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,24 +919,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &596643454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2527967563575961692, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-  m_PrefabInstance: {fileID: 1627835035171789549}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &596643457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596643454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 956036a4f1d1a43468c9fecd99e1c72b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialKey: tutorial_visto0
 --- !u!1 &600163786
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,24 +1421,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76321f288e6ae314d8cfbf63108948e5, type: 3}
---- !u!1 &752535935 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 221044484562870619, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
-  m_PrefabInstance: {fileID: 1432535594}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &752535937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752535935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 956036a4f1d1a43468c9fecd99e1c72b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialKey: tutorial_visto15
 --- !u!1 &847245863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2495,7 +2442,7 @@ MonoBehaviour:
   dinheiro: 1
   teamManager: {fileID: 1432535596}
   prizeText: {fileID: 1399385002}
-  moneyText: {fileID: 485700524}
+  moneyText: {fileID: 0}
   tribeRoulette: {fileID: 595954596}
   fishRoulette: {fileID: 1270775627}
   gmTribeRoulette: {fileID: 1935342836}
@@ -3499,14 +3446,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TeamSelectionUI
       objectReference: {fileID: 0}
+    - target: {fileID: 558887038707097356, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 684956312841510947, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
       propertyPath: resonanceManager
       value: 
       objectReference: {fileID: 1351208277}
-    - target: {fileID: 1245022417054173243, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
-      propertyPath: m_text
-      value: "Poss\xEDveis Sinergias:"
-      objectReference: {fileID: 0}
     - target: {fileID: 2386575767078646692, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
       propertyPath: resonanceManager
       value: 
@@ -3515,6 +3462,12 @@ PrefabInstance:
       propertyPath: resonanceManager
       value: 
       objectReference: {fileID: 1351208277}
+    - target: {fileID: 4000725784086284921, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: m_text
+      value: "Tamb\xE9m temos as ressonancias, sempre que voc\xEA junta no seu time,
+        tipos de peixes que tem sincronia entre si, eles melhoram suas capacidades
+        de combate."
+      objectReference: {fileID: 0}
     - target: {fileID: 4861902553938961562, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
       propertyPath: battleUI
       value: 
@@ -3571,6 +3524,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5795281508108102143, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5795281508108102143, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5795281508108102143, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 7392460272584357472, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3579,13 +3544,16 @@ PrefabInstance:
       propertyPath: resonanceManager
       value: 
       objectReference: {fileID: 1351208277}
+    - target: {fileID: 7535480855241540555, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: m_text
+      value: "Aqui est\xE1 seu time atual e reserva, voc\xEA pode arrasta-los para
+        outros slots para mudar a ordem de disposi\xE7\xE3o deles. Cada peixe tem
+        vida, dano, chance de critico e lugar que ele bate na batalha"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 221044484562870619, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 752535937}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
 --- !u!114 &1432535595 stripped
 MonoBehaviour:
@@ -3931,6 +3899,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1477424499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6127772039624632369, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
+  m_PrefabInstance: {fileID: 1627835035171789549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1477424502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477424499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956036a4f1d1a43468c9fecd99e1c72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialKey: tutorial_visto0
 --- !u!1 &1500541309
 GameObject:
   m_ObjectHideFlags: 0
@@ -4976,24 +4962,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048080679}
   m_CullTransparentMesh: 1
---- !u!1 &2131324969 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3405779220254855740, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
-  m_PrefabInstance: {fileID: 485700521}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2131324972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131324969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 956036a4f1d1a43468c9fecd99e1c72b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialKey: tutorial_visto2
 --- !u!1001 &1627835035171789549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5002,26 +4970,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 150729489344779385, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 365
-      objectReference: {fileID: 0}
-    - target: {fileID: 341009875403314318, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 365
-      objectReference: {fileID: 0}
     - target: {fileID: 945099647796388585, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
       propertyPath: teamManager
       value: 
       objectReference: {fileID: 1432535596}
-    - target: {fileID: 986070831190843773, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1428518137210652632, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 2.1
-      objectReference: {fileID: 0}
     - target: {fileID: 1444015645731267553, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
       propertyPath: teamManager
       value: 
@@ -5138,10 +5090,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4830072392457688525, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5092098152549637539, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
       propertyPath: m_Camera
       value: 
@@ -5154,43 +5102,29 @@ PrefabInstance:
       propertyPath: teamManager
       value: 
       objectReference: {fileID: 1432535596}
-    - target: {fileID: 6720869888823037805, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6736186897598179368, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.29
+      value: 2.6741552
       objectReference: {fileID: 0}
     - target: {fileID: 6736186897598179368, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.07
+      value: 5.1985164
       objectReference: {fileID: 0}
-    - target: {fileID: 7785013246750548556, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_text
-      value: "Aqui voc\xEA ir\xE1 escolher 3 guerreiros para o seu time. Cada coluna
-        representa um tipo de lutador, sendo eles moluscos, peixes e crustaceos.
-        Clique nos que gostar mais para seleciona-los."
+    - target: {fileID: 8755537208851762099, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.79
       objectReference: {fileID: 0}
-    - target: {fileID: 8306433776798974718, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8779274206083748992, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
+    - target: {fileID: 8755537208851762099, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 54
-      objectReference: {fileID: 0}
-    - target: {fileID: 9152060776436541525, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 43
+      value: 4.18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2527967563575961692, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 6127772039624632369, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 596643457}
+      addedObject: {fileID: 1477424502}
   m_SourcePrefab: {fileID: 100100000, guid: 093c8a105c31f4d4caaa598c6318ccc0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
