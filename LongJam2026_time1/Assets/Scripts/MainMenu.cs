@@ -27,5 +27,10 @@ private bool menuToggle = true;
     {
         Application.Quit();
     }
+
+    public void Play()
+    {
+        GameManager.LoadSceneByName("MainScene");
+    }
    
 }
