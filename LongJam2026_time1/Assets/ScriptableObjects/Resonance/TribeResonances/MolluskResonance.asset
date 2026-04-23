@@ -18,4 +18,4 @@ MonoBehaviour:
   targetTribe: 1
   atkIncrease: 0
   hpIncrease: 0
-  critIncrease: 0.1
+  critIncrease: 0.075

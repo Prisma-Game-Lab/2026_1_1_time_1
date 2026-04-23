@@ -775,6 +775,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1081796214082464840, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
+      propertyPath: tutorialKey
+      value: tutorial_visto222222222222222222222222222222
+      objectReference: {fileID: 0}
     - target: {fileID: 1887404516684829604, guid: 6dab362384628f74abbd39ac7c546d70, type: 3}
       propertyPath: m_Camera
       value: 
@@ -3561,6 +3565,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 221044484562870619, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 558887038707097356, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
       propertyPath: m_Name
       value: TeamSelectionUI
@@ -3573,6 +3581,10 @@ PrefabInstance:
       propertyPath: resonanceManager
       value: 
       objectReference: {fileID: 1351208277}
+    - target: {fileID: 1966108926225846357, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
+      propertyPath: tutorialKey
+      value: tutorial_visto111111111111111111111111111111111
+      objectReference: {fileID: 0}
     - target: {fileID: 2386575767078646692, guid: df6f4021961ba104b82ff38eb35b1cd6, type: 3}
       propertyPath: resonanceManager
       value: 
@@ -4051,7 +4063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956036a4f1d1a43468c9fecd99e1c72b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialKey: tutorial_visto0
+  tutorialKey: tutorial_visto00000000000000000000000000
 --- !u!1 &1477450534
 GameObject:
   m_ObjectHideFlags: 0
