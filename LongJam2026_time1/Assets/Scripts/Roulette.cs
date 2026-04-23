@@ -28,7 +28,9 @@ public class Roulette : MonoBehaviour
     [Header ("UI References")]
 
     [SerializeField] public TextMeshProUGUI prizeText;
-    [SerializeField] public TextMeshProUGUI moneyText;
+    //[SerializeField] public TextMeshProUGUI moneyText;
+
+    [SerializeField] public GameObject prize;
 
     [SerializeField] public GameObject tribeRoulette;
 
@@ -71,7 +73,7 @@ public class Roulette : MonoBehaviour
     float t;
     private void Update()
     {
-        moneyText.text = "Dinheiro: " + dinheiro;
+        //moneyText.text = "Dinheiro: " + dinheiro;
 
         if (rbody != null && rbody.angularVelocity > 0)
         {
@@ -255,6 +257,7 @@ public class Roulette : MonoBehaviour
 
         }
 
+        prize.SetActive(true);
         prizeText.text = "VOCÊ GANHOU UM: " + rewardFish.fishName;
         
         AudioManager.Instance?.PlaySFX("rewardSFX");
@@ -262,10 +265,12 @@ public class Roulette : MonoBehaviour
         StartCoroutine(EndRoulette());
 
     }
-
+    
     private IEnumerator EndRoulette()
     {
         yield return new WaitForSeconds(endRouletteTimer);
+
+        prize.SetActive(false);
         prizeText.text = "";
         fadeAnim.SetTrigger("Start");
         yield return new WaitForSeconds(fadeDuration);

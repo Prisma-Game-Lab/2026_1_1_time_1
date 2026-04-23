@@ -22,6 +22,9 @@ public class SetManager : MonoBehaviour
 
     [Header("UI References")]
 
+    [Header("Corners")]
+
+
     [SerializeField] private TextMeshProUGUI playerCount;
 
     [SerializeField] private TextMeshProUGUI enemyCount;
