@@ -15,9 +15,9 @@ MonoBehaviour:
   rivalName: "John Crust\xE1ceo"
   rivalFlavor: 
   firstTeam:
-  - {fileID: 11400000, guid: 943bd5398a4335c4080812fdb0bde95e, type: 2}
-  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
   - {fileID: 11400000, guid: d93a75e7d350a2a488d934a94cefdee0, type: 2}
+  - {fileID: 11400000, guid: 31b765a2027eee24ebe4df768336e327, type: 2}
+  - {fileID: 11400000, guid: fe6056737dfdf614da4db1b4dfe8520a, type: 2}
   secondTeam:
   - {fileID: 11400000, guid: 31b765a2027eee24ebe4df768336e327, type: 2}
   - {fileID: 11400000, guid: 30f00241300e5b64a84a84a26a569c38, type: 2}

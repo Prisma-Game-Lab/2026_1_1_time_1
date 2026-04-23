@@ -70,6 +70,9 @@ public class Roulette : MonoBehaviour
 
     private FishSO rewardFish;
 
+    private int lastTribeSegment = -1;
+    private int lastFishSegment = -1;
+
     float t;
     private void Update()
     {
@@ -78,8 +81,30 @@ public class Roulette : MonoBehaviour
         if (rbody != null && rbody.angularVelocity > 0)
         {
             rbody.angularVelocity -= StopPower*Time.deltaTime;
-
             rbody.angularVelocity = Mathf.Clamp(rbody.angularVelocity, 0, 1440);
+
+            if (currentSpinning == tribeRoulette)
+            {
+                int segment = Mathf.FloorToInt(tribeRoulette.transform.eulerAngles.z / 60f) % 6;
+                if (lastTribeSegment < 0)
+                    lastTribeSegment = segment;
+                else if (segment != lastTribeSegment)
+                {
+                    AudioManager.Instance?.PlaySFX("spinSFX");
+                    lastTribeSegment = segment;
+                }
+            }
+            else if (currentSpinning == fishRoulette)
+            {
+                int segment = Mathf.FloorToInt(fishRoulette.transform.eulerAngles.z / 72f) % 5;
+                if (lastFishSegment < 0)
+                    lastFishSegment = segment;
+                else if (segment != lastFishSegment)
+                {
+                    AudioManager.Instance?.PlaySFX("spinSFX");
+                    lastFishSegment = segment;
+                }
+            }
         }
 
         if (rbody != null && rbody.angularVelocity == 0 && inRotate == 1)
@@ -121,6 +146,7 @@ public class Roulette : MonoBehaviour
                 rbody = target.GetComponent<Rigidbody2D>();
                 rbody.AddTorque(RotatePower);
                 inRotate = 1;
+                lastTribeSegment = -1;
             }
         }
     }
@@ -133,6 +159,7 @@ public class Roulette : MonoBehaviour
         rbody = fishRoulette.GetComponent<Rigidbody2D>();
         rbody.AddTorque(RotatePower);
         inRotate = 1;
+        lastFishSegment = -1;
     }
 
 
@@ -265,13 +292,13 @@ public class Roulette : MonoBehaviour
         StartCoroutine(EndRoulette());
 
     }
-    
+
     private IEnumerator EndRoulette()
     {
         yield return new WaitForSeconds(endRouletteTimer);
-
         prize.SetActive(false);
         prizeText.text = "";
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("Start");
         yield return new WaitForSeconds(fadeDuration);
         gmTribeRoulette.SetActive(true);
@@ -280,6 +307,7 @@ public class Roulette : MonoBehaviour
         teamSelectionUI.SetActive(true);
         teamManager.InitializeUI();
         setUI.SetActive(true);
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("End");
     }
 

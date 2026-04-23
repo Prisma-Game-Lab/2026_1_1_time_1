@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishName: Jackie Clam
   fishTribe: 1
-  fishMaxHealth: 5
+  fishMaxHealth: 6
   fishDamage: 1
   fishCritChance: 0.1
   targets: 02000000

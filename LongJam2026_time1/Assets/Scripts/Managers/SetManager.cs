@@ -47,7 +47,7 @@ public class SetManager : MonoBehaviour
 
     [SerializeField] private float rivalScreenTime = 3f;
 
-    [SerializeField] private float fadeDuration = 1.0f;
+    [SerializeField] private float fadeDuration = 1.25f;
 
     [Header("Manager References")]
 
@@ -95,6 +95,9 @@ public class SetManager : MonoBehaviour
     private int lastRival;
     void Start()
     {
+        AudioManager.Instance?.StopMusic();
+        AudioManager.Instance?.PlayMusic("cassinoMusic");
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         lastRival = enemyRivalSOs.Count-1;
 
         battleManager.InitializeEnemyTeam(enemyRivalSOs[currentRival].firstTeam, enemyRivalSOs[currentRival].enemyResonance );
@@ -118,6 +121,7 @@ public class SetManager : MonoBehaviour
     private IEnumerator StartSetAfterRivalScreen()
     {
         yield return new WaitForSeconds(rivalScreenTime);
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("Start");
         yield return new WaitForSeconds(fadeDuration);
         rivalUI.SetActive(false);
@@ -128,6 +132,7 @@ public class SetManager : MonoBehaviour
         teamSortUI.SetActive(true);
         money.dinheiro = 1;
         setUI.SetActive(false);
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("End");
     }
     public void LoadNextRival()
@@ -146,7 +151,10 @@ public class SetManager : MonoBehaviour
         StartSet(); 
     }
     public void EndRound()
-    {
+    {   
+        AudioManager.Instance?.PlaySFX("endBattleSFX");
+        AudioManager.Instance?.StopMusic();
+        AudioManager.Instance?.PlayMusic("cassinoMusic");
         if (roundWinner == Winner.Player)
         {
             playerRounds++;
@@ -207,6 +215,7 @@ public class SetManager : MonoBehaviour
         }
 
         battleManager.winnerText.text = "";
+        battleManager.winnerGm.SetActive(false);
         battleManager.StopAllCoroutines();
         EndScreen.SetActive(true);
     }
@@ -217,6 +226,7 @@ public class SetManager : MonoBehaviour
 
     private IEnumerator RestartRoundTransition()
     {
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("Start");
         yield return new WaitForSeconds(fadeDuration);
 
@@ -236,6 +246,7 @@ public class SetManager : MonoBehaviour
             teamSelectionUI.SetActive(true);
         }
 
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("End");
     }
 

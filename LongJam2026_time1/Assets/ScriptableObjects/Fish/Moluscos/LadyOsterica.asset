@@ -17,6 +17,6 @@ MonoBehaviour:
   fishMaxHealth: 5
   fishDamage: 2
   fishCritChance: 0.1
-  targets: 02000000
+  targets: 01000000
   fishSprite: {fileID: 21300000, guid: 9c1ee1675a7f75b4a84ea95dc2e4513f, type: 3}
   auraSprite: {fileID: 21300000, guid: cb3f0bd31f36e904eab8a638fb5fa8ef, type: 3}

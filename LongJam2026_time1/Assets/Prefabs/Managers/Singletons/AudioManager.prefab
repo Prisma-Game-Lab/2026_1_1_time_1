@@ -305,10 +305,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSounds:
   - {fileID: 8300000, guid: c80dbfa11e835734e90fc6330e3d8dfb, type: 3}
+  - {fileID: 8300000, guid: 93f456463657cd44798bdd5a9061b922, type: 3}
+  - {fileID: 8300000, guid: 6627bfe54273f614aa813ff16ed06411, type: 3}
   sfxSounds:
-  - {fileID: 8300000, guid: 2446511df6269f8458248912e7282659, type: 3}
+  - {fileID: 8300000, guid: 3e659446f57e439439400d91d4a7456a, type: 3}
   - {fileID: 8300000, guid: f29cbf0869d55c448b1f0fa3ea48ca24, type: 3}
-  - {fileID: 8300000, guid: 867a04dc60bdc5d44934def766d9308d, type: 3}
+  - {fileID: 8300000, guid: 53a895bdd42381b47a6d05440ee706f0, type: 3}
+  - {fileID: 8300000, guid: 13c82d4e07984aa48a6ef1a0d87497e7, type: 3}
+  - {fileID: 8300000, guid: a05aca9ec9bb355478a37b9501b8608c, type: 3}
+  - {fileID: 8300000, guid: b9a4f2ee413177948a0f952bfe2117f9, type: 3}
+  - {fileID: 8300000, guid: 5971b0ee148f50341bf9ad7846da6f66, type: 3}
+  - {fileID: 8300000, guid: ec36433ce4545664d8d3adef15ef4e20, type: 3}
   musicSource: {fileID: 8633840112836365739}
   sfxSource: {fileID: 7967624431860758210}
   loopingSfxSource: {fileID: 8943972103952386809}

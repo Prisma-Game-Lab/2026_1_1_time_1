@@ -15,12 +15,12 @@ MonoBehaviour:
   rivalName: Camarujo
   rivalFlavor: 
   firstTeam:
-  - {fileID: 11400000, guid: 6812102a709d72b47824ce6088e6a74b, type: 2}
-  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
-  - {fileID: 11400000, guid: 6ede2273f54c897428271cdbd4551ed2, type: 2}
-  secondTeam:
   - {fileID: 11400000, guid: 9f5ab81bcbc6abd4e86533167de7c1e7, type: 2}
-  - {fileID: 11400000, guid: c7dd36fc1f1aaeb4292958a15a771544, type: 2}
+  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
+  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
+  secondTeam:
+  - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
+  - {fileID: 11400000, guid: dba193a6d2d15494f92d71a613e24b45, type: 2}
   - {fileID: 11400000, guid: 00f51b4157cee2e40a77ff6923c4ee03, type: 2}
   rivalSprite: {fileID: 21300000, guid: 43358279efb49d74a976c745ac36eb36, type: 3}
   enemyResonance: {fileID: 11400000, guid: b1c7c88bcbd75c44498e2ff77404575d, type: 2}

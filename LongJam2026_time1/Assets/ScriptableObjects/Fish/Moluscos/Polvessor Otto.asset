@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishName: Polvessor Otto
   fishTribe: 1
-  fishMaxHealth: 4
-  fishDamage: 3
+  fishMaxHealth: 3
+  fishDamage: 4
   fishCritChance: 0.1
   targets: 03000000
   fishSprite: {fileID: 21300000, guid: 4dc3982dc28af2a4980aa75cc979aee1, type: 3}

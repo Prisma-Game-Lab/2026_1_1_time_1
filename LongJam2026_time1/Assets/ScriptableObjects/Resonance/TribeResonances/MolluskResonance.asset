@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MolluskResonance
   m_EditorClassIdentifier: 
   resonanceName: Sorte de molusco
-  nameConditions: []
+  fishConditions: []
   tribeConditions: 0100000001000000
   targetTribe: 1
   atkIncrease: 0
   hpIncrease: 0
-  critIncrease: 0.05
+  critIncrease: 0.1

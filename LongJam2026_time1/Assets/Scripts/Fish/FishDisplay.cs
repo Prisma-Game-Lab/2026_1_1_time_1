@@ -58,6 +58,8 @@ public class FishDisplay : MonoBehaviour, IPointerClickHandler
 
         fishData = fish.data;
 
+        fishInfoCard.SetUp(fish.data);
+
         fishSprite.sprite = fish.data.fishSprite;
         auraImage.sprite = fish.data.auraSprite;
         fishDamage.text = fish.currentDamage.ToString();
@@ -222,7 +224,10 @@ public class FishDisplay : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Right) return;
-        if (fishInfoCard == null || fishData == null) return;
+        if (fishInfoCard == null || fishData == null)
+        {
+           return; 
+        } 
 
         bool isShowing = fishInfoCard.gameObject.activeSelf;
         if (!isShowing)

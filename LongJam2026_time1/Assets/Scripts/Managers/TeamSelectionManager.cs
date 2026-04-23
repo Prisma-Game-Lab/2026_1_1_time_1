@@ -149,12 +149,16 @@ public class TeamSelectionManager : MonoBehaviour
 
     private IEnumerator ToBattleTransition()
     {
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("Start");
         yield return new WaitForSeconds(fadeDuration);
+        AudioManager.Instance?.StopMusic();
+        AudioManager.Instance?.PlayMusic("combatMusic");
         SetPlayerBattleTeam();
         battleUI.SetActive(true);
         battleManager.StartBattle();
         teamSelectionUI.SetActive(false);
+        AudioManager.Instance?.PlaySFX("transitionSFX");
         fadeAnim.SetTrigger("End");
     }
 

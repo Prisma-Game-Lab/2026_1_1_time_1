@@ -28,6 +28,8 @@ public class BattleManager : MonoBehaviour
     
     [SerializeField] public TextMeshProUGUI winnerText;
 
+    [SerializeField] public GameObject winnerGm;
+
     //[Header("Teams Setup")]
     private List<FishSO> playerTeamSO = new List<FishSO>();
     private List<FishSO> enemyTeamSO = new List<FishSO>();
@@ -153,8 +155,9 @@ public class BattleManager : MonoBehaviour
             
             yield return new WaitForSeconds(delayBeforeDamage); 
 
-            ExecuteAttack(pAttacker, enemyTeam, true);
-            ExecuteAttack(eAttacker, playerTeam, false);
+            bool pCrit = ExecuteAttack(pAttacker, enemyTeam, true);
+            bool eCrit = ExecuteAttack(eAttacker, playerTeam, false);
+            AudioManager.Instance?.PlaySFX((pCrit || eCrit) ? "critSFX" : "hitSFX");
 
             
             yield return new WaitForSeconds(delayAfterDamage); 
@@ -185,9 +188,9 @@ public class BattleManager : MonoBehaviour
     }
     }
 
-    void ExecuteAttack(BattleFish attacker, List<BattleFish> opponentTeam, bool isAttackerPlayer)
+    bool ExecuteAttack(BattleFish attacker, List<BattleFish> opponentTeam, bool isAttackerPlayer)
     {
-        if (opponentTeam.Count == 0) return;
+        if (opponentTeam.Count == 0) return false;
 
         // 1. Calculate Damage and Crit once for the entire attack instance
         int damageAmount = attacker.currentDamage;
@@ -218,6 +221,7 @@ public class BattleManager : MonoBehaviour
                 UpdateAttackVisuals(visualIndex, damageAmount, isCrit, isAttackerPlayer, targetFish.currentHealth);
             }
         }
+        return isCrit;
     }
 
     // Helper method to find the "Smart" target
@@ -285,6 +289,7 @@ public class BattleManager : MonoBehaviour
 
     void DetermineWinner()
     {
+        winnerGm.SetActive(true);
         if (playerTeam.Count > 0)
         {
             Debug.Log("JOGADOR GANHOU!");
@@ -308,13 +313,16 @@ public class BattleManager : MonoBehaviour
         AudioManager.Instance?.StopLoopingSFX();
         setManager.EndRound();
         if(setManager.setWinner == Winner.Draw)
-        StartCoroutine(EndBattle());
+        {
+            StartCoroutine(EndBattle());
+        }
         
     }
 
     private IEnumerator EndBattle()
     {
-        yield  return new WaitForSeconds(5);
+        yield  return new WaitForSeconds(3);
+        winnerGm.SetActive(false);
         winnerText.text = "";
         setManager.RestartRound();
         
@@ -443,6 +451,7 @@ public class BattleManager : MonoBehaviour
             //SetButtonColor(pauseButton, Color.white);
             pauseButton.image.sprite = unpressedPause;
             currentTime = BattleTime.Normal;
+            AudioManager.Instance?.PlayLoopingSFX("auraSFX");
         }
         else
         {
@@ -452,6 +461,7 @@ public class BattleManager : MonoBehaviour
             //SetButtonColor(fastForwardButton, Color.white);
             fastForwardButton.image.sprite = unpressedForward;
             SetButtonColor(slowDownButton, Color.white);
+            AudioManager.Instance?.StopLoopingSFX();
 
             currentTime = BattleTime.Paused;
             Time.timeScale = 0;
